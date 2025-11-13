@@ -1,0 +1,29 @@
+{
+    "files.associations": {
+        "typeinfo": "c",
+        "logger.h": "c",
+        "blog_db.h": "c",
+        "string.h": "c",
+        "type_traits": "c",
+        "database.h": "c",
+        "app_context.h": "c",
+        "socket.h": "c",
+        "request_parser.h": "c",
+        "hashmap.h": "c",
+        "stdlib.h": "c",
+        "blog.h": "c",
+        "response_builder.h": "c",
+        "config.h": "c",
+        "router.h": "c",
+        "static_files.h": "c",
+        "md_parser.h": "c",
+        "stdio.h": "c",
+        "socket_manager.h": "c",
+        "sqlite3.h": "c",
+        "md4c.h": "c",
+        "entity.h": "c",
+        "md4c-html.h": "c",
+        "file_utils.h": "c",
+        "file_handling.h": "c"
+    }
+}

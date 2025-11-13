@@ -1,0 +1,110 @@
+# Makefile for shared components - FIXED SQLITE3
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99 -D_POSIX_C_SOURCE=200809L -I. -Iconfig -Idb -Ilibs -Ilogger -Iutils/hashmap -Iutils
+AR = ar
+ARFLAGS = rcs
+
+# Library names
+CONFIG_LIB = libconfig.a
+DB_LIB = libdb.a
+CORE_LIB = libcore.a
+LOGGER_LIB = liblogger.a
+UTILS_LIB = libutils.a
+
+ALL_LIBS = $(CONFIG_LIB) $(DB_LIB) $(CORE_LIB) $(LOGGER_LIB) $(UTILS_LIB)
+
+# Source files
+CONFIG_SRCS = config/config.c
+DB_SRCS = db/blog_db.c db/database.c
+CORE_SRCS = libs/entity.c libs/md4c.c libs/md4c-html.c libs/sqlite3.c
+LOGGER_SRCS = logger/logger.c
+UTILS_SRCS = utils/hashmap/hashmap.c utils/file_handling.c utils/file_utils.c
+
+# Test programs
+CONFIG_TEST = config/test_config
+HASHMAP_TEST = utils/hashmap/test_hashmap
+
+# Object files - ALL IN ROOT DIRECTORY
+CONFIG_OBJS = $(notdir $(CONFIG_SRCS:.c=.o))
+DB_OBJS = $(notdir $(DB_SRCS:.c=.o))
+CORE_OBJS = $(notdir $(CORE_SRCS:.c=.o))
+LOGGER_OBJS = $(notdir $(LOGGER_SRCS:.c=.o))
+UTILS_OBJS = $(notdir $(UTILS_SRCS:.c=.o))
+
+ALL_OBJS = $(CONFIG_OBJS) $(DB_OBJS) $(CORE_OBJS) $(LOGGER_OBJS) $(UTILS_OBJS)
+
+.PHONY: all clean test
+
+all: $(ALL_LIBS)
+
+test: $(CONFIG_TEST) $(HASHMAP_TEST)
+	@echo "Built test programs"
+
+# Test programs
+$(CONFIG_TEST): config/test_config.c $(CONFIG_LIB)
+	$(CC) $(CFLAGS) $< -L. -lconfig -o $@
+
+$(HASHMAP_TEST): utils/hashmap/test_hashmap.c $(UTILS_LIB)
+	$(CC) $(CFLAGS) $< -L. -lutils -o $@
+
+# Individual libraries
+$(CONFIG_LIB): $(CONFIG_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built config library: $@"
+
+$(DB_LIB): $(DB_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built database library: $@"
+
+$(CORE_LIB): $(CORE_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built core library: $@"
+
+$(LOGGER_LIB): $(LOGGER_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built logger library: $@"
+
+$(UTILS_LIB): $(UTILS_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built utils library: $@"
+
+# Pattern rules for object files - ALL IN ROOT
+%.o: config/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: db/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: libs/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# SPECIAL RULE FOR SQLITE3 - with thread safety
+sqlite3.o: libs/sqlite3.c
+	$(CC) $(CFLAGS) -DSQLITE_THREADSAFE=1 -c $< -o $@
+
+%.o: logger/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: utils/hashmap/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: utils/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	rm -f $(ALL_OBJS) $(ALL_LIBS) $(CONFIG_TEST) $(HASHMAP_TEST)
+	@echo "Cleaned all objects and libraries"
+
+# Dependencies
+config.o: config/config.c config/config.h
+blog_db.o: db/blog_db.c db/blog_db.h db/database.h
+database.o: db/database.c db/database.h
+entity.o: libs/entity.c libs/entity.h
+md4c.o: libs/md4c.c libs/md4c.h
+md4c-html.o: libs/md4c-html.c libs/md4c-html.h
+sqlite3.o: libs/sqlite3.c libs/sqlite3.h
+logger.o: logger/logger.c logger/logger.h
+hashmap.o: utils/hashmap/hashmap.c utils/hashmap/hashmap.h
+file_handling.o: utils/file_handling.c utils/file_handling.h
+file_utils.o: utils/file_utils.c utils/file_utils.h

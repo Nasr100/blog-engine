@@ -1,0 +1,13 @@
+*.excalidraw
+
+# Object files
+*.o
+
+
+# Executables
+server
+*/src/importer
+
+*.env
+
+

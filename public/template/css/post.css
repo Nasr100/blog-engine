@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+
+
+body{
+    background-color: #292929;
+    /* background-color: #1f2123; */
+    color: rgb(204, 202, 202);
+    width: 100%;
+}
+
+a{
+    text-decoration:none ;
+    color: rgb(204, 202, 202);
+}
+
+header{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    /* border: 1px red dotted; */
+    padding : 50px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.blog-heading{
+    font-size: 40px;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+.heading-tag{
+    margin-top: 5px;
+    font-weight: 300;
+}
+
+.line{
+    border: 1px rgb(204, 202, 202) solid;
+}
+.content{
+    width: 100%;
+}
+
+main{
+    width: 85%;
+    max-width: 60rem;
+    margin: 0 auto;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+
+.post{
+    padding: 40px 0;
+    
+}
+.post-title{
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 300;
+}
+.post-main{
+    
+    line-height: 2.3rem;
+    text-align: left;
+}
+h2{
+    letter-spacing: 2px;
+    margin-top: 70px;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+p{
+    margin-bottom: 20px;
+}
+
+
+
+@media (max-width: 768px) {
+     main {
+
+    font-size: 20px;
+  }
+
+.blog-heading{
+    font-size: 35px;
+   
+}
+.heading-tag{
+   font-size: 14px;
+}
+ 
+.post-title{
+    font-size: 2rem;
+}
+ h2{
+    font-size: 26px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+ }
+}
