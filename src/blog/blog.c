@@ -46,7 +46,6 @@ void render_article(int socket, http_message* message,AppContext* ctx) {
             
             send(socket, post_header, strlen(post_header), 0);
             
-            // Use dynamic allocation instead of VLA (Variable Length Array)
             char* html_buffer = malloc(generated_html_length + 1);
             if(html_buffer) {
                 snprintf(html_buffer, generated_html_length + 1, "<h1 class=\"post-title\">%s</h1><div class=\"post-main\">%s</div>", article->title, html.data);

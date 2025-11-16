@@ -6,7 +6,6 @@
 
 # Executables
 server
-*/src/importer
 
 *.env
 

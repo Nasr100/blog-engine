@@ -25,19 +25,22 @@
     </header>
     <main class="home-main">
         <!-- c code -->
+         {%for post in posts%}
         <div class="card">
             <div class="card-header">
                 <div class="image-wrapper">
-                    
                 </div>
                 <div class="user-meta">
                     <!-- <p class="user-name">Benkhali Nasrallah</p> -->
                 </div>
             </div>
             <div class="card-main">
-                <h2><a href="">Umbraco in the City - Community, Code, and Cuddles</a></h2>
+                <!-- <h2><a href="">Umbraco in the City - Community, Code, and Cuddles</a></h2> -->
+                 <h2><a href="{post->slug}">{{post->title}}</a></h2>
                 <div class="tags">
-                   <a href="" class="tag"><span class="tag-prefix">#</span> tech</a>
+                    {%for tag in post->tags %}
+                   <a href="" class="tag"><span class="tag-prefix">#</span> {{tag}}</a>
+                   {%end for%}
                    <a href="" class="tag"><span class="tag-prefix">#</span> tech</a>
                    <a href="" class="tag"><span class="tag-prefix">#</span> tech</a>
                    <a href="" class="tag"><span class="tag-prefix">#</span> tech</a>
@@ -46,10 +49,11 @@
             <div class="card-footer">
                 <a href="" class="likes">
                    <i class="fa-regular fa-heart"></i>
-                    <span class="likes-number">23</span>
+                    <span class="likes-number">{{post->likes}}</span>
                 </a>
             </div>
         </div>
+        {%end for%}
         <!-- c code -->
 
     </main>
