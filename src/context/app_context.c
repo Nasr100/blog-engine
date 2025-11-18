@@ -26,7 +26,7 @@ int app_context_init(AppContext* ctx) {
     
     ctx->logger = create_logger(config_get_log_file(ctx->config));
     
-    //stabase coonect
+    //stabase coonnect
     if (database_connect(&ctx->db, config_get_db_path(ctx->config), ctx->logger) != 0) {
         return -1;
     }

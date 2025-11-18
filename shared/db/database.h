@@ -3,21 +3,18 @@
 
 #include <sqlite3.h>
 #include "../../shared/libs/sqlite3.h"
-#include "blog_db.h"
-#include "../logger/logger.h"
 
-
+ typedef struct database{
+    sqlite3* db;
+    char* db_path;
+    char* err_msg;
+}database;
 // Database connection
-int database_connect(sqlite3** db, const char* db_path, logger_t* logger);
-void database_close(sqlite3* db);
+int database_connect(char* db_path);
+void database_close(database* database);
+// transaction
+int database_begin_transaction(database* database);
+int database_commit(database* database);
 
-// Blog operations
-article_array* get_all_blogs(sqlite3* db, logger_t* logger);
-article* get_blog_by_slug(sqlite3* db, char* slug);
-tag_array* get_all_tags(sqlite3* db, logger_t* logger);
-
-// Import tool operations (to add later)
-// int insert_blog(sqlite3* db, article* blog, logger_t* logger);
-// int update_blog(sqlite3* db, article* blog, logger_t* logger);
 
 #endif
