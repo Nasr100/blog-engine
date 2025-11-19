@@ -32,6 +32,7 @@
         "post.h": "c",
         "post_tagrepo.h": "c",
         "tagrepo.h": "c",
-        "evp.h": "c"
+        "evp.h": "c",
+        "userrepo.h": "c"
     }
 }
