@@ -4,11 +4,18 @@
 #include <sqlite3.h>
 #include "../../shared/logger/logger.h"
 #include "../../shared/config/config.h"
+#include "../service/post/postService.h"
+#include "../service/tag/tagService.h"
+#include "../../shared/db/database.h"  
+#include "../include/router.h"
+
 typedef struct router router;
 typedef struct AppContext{
     logger_t* logger;
-    sqlite3* db;
-    router* router;        
+    database* database;
+    router* router;
+    postService* postService;        
+    tagService* tagService;        
     BlogConfig* config;
 }AppContext;
 

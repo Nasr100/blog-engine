@@ -2,20 +2,11 @@
 #include <stdlib.h>  
 #include <string.h>
 #include "hashmap.h"
+#include "../helpers.h"
 
-#define MAX_KEY_LENGTH 100
 
-typedef struct key_value {
-    char key[MAX_KEY_LENGTH];
-    void* value;
-    struct key_value* next;
-} key_value_t;
 
-struct hashmap {
-    key_value_t** array;
-    int capacity;
-    int count;
-};
+
 
 static int hash_key(const char* key) {
     int sum = 0;
@@ -35,6 +26,19 @@ static key_value_t* create_keyval(const char* key, void* value) {
     strncpy(kv->key, key, MAX_KEY_LENGTH - 1);
     kv->key[MAX_KEY_LENGTH - 1] = '\0';
     kv->value = value;
+    kv->next = NULL;
+    return kv;
+}
+static key_value_t* create_keyval_str(const char* key, char* value) {
+    key_value_t* kv = (key_value_t*)malloc(sizeof(key_value_t));
+    if(kv == NULL) {
+        fprintf(stderr, "ERROR: Cannot allocate memory for key_value\n");
+        return NULL;
+    }
+    
+    strncpy(kv->key, key, MAX_KEY_LENGTH - 1);
+    kv->key[MAX_KEY_LENGTH - 1] = '\0';
+    kv->value = my_strdup(value);
     kv->next = NULL;
     return kv;
 }
@@ -128,6 +132,35 @@ int hashmap_insert(hashmap_t* map, const char* key, void* value) {
     return 0;
 }
 
+int hashmap_insert_str(hashmap_t* map, const char* key, char* value) {
+    if(!map || !key) return -1;
+    
+    if(resize_hashmap(map) != 0) {
+        return -1;
+    }
+    
+    int index = hash_key(key) % map->capacity;
+    
+    key_value_t* current = map->array[index];
+    while(current != NULL) {
+        if(strcmp(current->key, key) == 0) {
+            // Key exists, replace value
+            current->value = value;
+            return 0;
+        }
+        current = current->next;
+    }
+    
+    key_value_t* kv = create_keyval_str(key, value);
+    if(!kv) return -1;
+    
+    kv->next = map->array[index];
+    map->array[index] = kv;
+    map->count++;
+    
+    return 0;
+}
+
 void* hashmap_get(hashmap_t* map, const char* key) {
     if(!map || !key) return NULL;
     
@@ -151,16 +184,17 @@ int hashmap_size(const hashmap_t* map) {
 void hashmap_destroy(hashmap_t* map) {
     if(!map) return;
     
-    for(int i = 0; i < map->capacity; i++) {
-        key_value_t* current = map->array[i];
-        while(current != NULL) {
-            key_value_t* next = current->next;
-            free(current);
-            current = next;
-        }
-    }
+    // for(int i = 0; i < map->capacity; i++) {
+    //     key_value_t* current = map->array[i];
+    //     while(current != NULL) {
+    //         key_value_t* next = current->next;
+    //         free(current);
+    //         current = next;
+    //     }
+    // }
     
-    free(map->array);
+    if(map->array)free(map->array);
+    map->array = NULL;
     free(map);
 }
 

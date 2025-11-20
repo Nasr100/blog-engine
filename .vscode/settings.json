@@ -33,6 +33,14 @@
         "post_tagrepo.h": "c",
         "tagrepo.h": "c",
         "evp.h": "c",
-        "userrepo.h": "c"
+        "userrepo.h": "c",
+        "user.h": "c",
+        "postdto.h": "c",
+        "tagservice.h": "c",
+        "postservice.h": "c",
+        "tagdto.h": "c",
+        "unistd.h": "c",
+        "server.h": "c",
+        "errno.h": "c"
     }
 }

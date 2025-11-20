@@ -13,32 +13,56 @@ static database* create_dbConnection(char* db_path){
    return db;
 }
 
-int database_connect(char* db_path){
+database* database_connect(char* db_path){
     database* database = create_dbConnection(db_path);
 	int rc =  sqlite3_open(database->db_path,&(database->db));
 	 
     if (rc != SQLITE_OK) {
         pritnf("Cannot open database: %s\n", sqlite3_errmsg(database->db));
         sqlite3_close(database->db);
-        return 1;
+        return NULL;
     }   
     puts("DB connection SUCCESS");
-    return 0;
+    return database;
 }
 
 
 int database_begin_transaction(database* database){
-    return sqlite3_exec(database->db, "BEGIN TRANSACTION", 0, 0, &(database->err_msg));
+    int rc= sqlite3_exec(database->db, "BEGIN TRANSACTION", 0, 0, &(database->err_msg));
+     if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", database->err_msg);
+        sqlite3_free(database->err_msg);
+    }
+    return rc;
 }
 
 int database_commit(database* database){
-    return sqlite3_exec(database->db, "COMMIT", 0, 0, &(database->err_msg));
+    int rc = sqlite3_exec(database->db, "COMMIT", 0, 0, &(database->err_msg));
+     if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", database->err_msg);
+        sqlite3_free(database->err_msg);
+    }
+    return rc;
 }
+int rollback(database* database){
+    int rc = sqlite3_exec(database->db, "ROLLBACK;", 0, 0, &database->err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", database->err_msg);
+        sqlite3_free(database->err_msg);
+    }
+    return rc;
+   
 
-void destroy_database(database* database){
+}
+void destroy_database(database** database_ptr){
+    if(*database_ptr==NULL) return;
+    database*database = *database_ptr;
+    if(database->db_path)free(database->db_path);
+    database->db_path = NULL;
    if(database) free(database);
+   database = NULL;
 }
 void database_close(database* database){
     sqlite3_close(database->db);
-    destroy_database(database);
+    destroy_database(&database);
 }

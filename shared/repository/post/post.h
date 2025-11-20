@@ -5,7 +5,7 @@
 #include "../tag/tag.h"
 #include "../../utils/dynamic_array/dynamic_array.h"
 #include "../../utils/helpers.h"
-#define MAX_TAGS 5
+
 // typedef enum post_status{
 //     DRAFT,
 //     PUBLISH

@@ -38,7 +38,7 @@ void destroy_post(post* post){
     if(post->slug)free(post->slug);
     if(post->status)free(post->status);
 
-    if(post->tags){
+    if(post->tags != NULL){
         for(int i = 0;i<post->tags->count;i++){
             tag* t = (tag*)post->tags->array[i];
             if(t) destroy_tag(t);

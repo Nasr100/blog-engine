@@ -2,10 +2,9 @@
 #include <string.h>
 #include<stdlib.h>
 #include "../include/app_context.h"
-#include "../../shared/db/database.h"  
-#include "../include/blog.h"
 #include "../../shared/utils/hashmap/hashmap.h"
-#include "../include/router.h"
+#include "../../shared/repository/post/postRepo.h"
+#include "../../shared/repository/tag/tagRepo.h"
 AppContext* app_context_create(void) {
     AppContext* ctx = malloc(sizeof(AppContext));
     if (!ctx) return NULL;
@@ -23,15 +22,17 @@ AppContext* app_context_create(void) {
 int app_context_init(AppContext* ctx) {
     if (!ctx) return -1;
     
-    
+    //init logger
+
     ctx->logger = create_logger(config_get_log_file(ctx->config));
     
-    //stabase coonnect
-    if (database_connect(&ctx->db, config_get_db_path(ctx->config), ctx->logger) != 0) {
+    //database coonnect
+    ctx->database = database_connect(config_get_db_path(ctx->config));
+    if (ctx->database == NULL) {
         return -1;
     }
     
-    
+    //init router
     ctx->router = create_router();
      
     if (!ctx->router) {
@@ -54,6 +55,20 @@ int app_context_init(AppContext* ctx) {
 
     //post routes
     
+
+
+    //init repositories
+    postRepo* postRepo = create_post_repo(ctx->database);
+    if(postRepo == NULL) return -1;
+    tagRepo* tagRepo = create_tagRepo(ctx->database);
+    if(tagRepo == NULL) return -1;
+
+    //init services
+    ctx->postService = postService_create(postRepo,tagRepo);
+    if(ctx->postService == NULL) return -1;
+
+    ctx->tagService = tagService_create(tagRepo);
+    if(ctx->tagService == NULL) return -1;
     log_info(ctx->logger, "App context initialized successfully!");
     return 0;
 }
@@ -61,9 +76,13 @@ int app_context_init(AppContext* ctx) {
 void app_context_destroy(AppContext* ctx) {
     if (!ctx) return;
     
-    if (ctx->router) destroy_router(ctx->router); 
-    if (ctx->db) database_close(ctx->db);
+    if (ctx->router) destroy_router((ctx->router)); 
+    if (ctx->database) database_close(ctx->database);
     if (ctx->logger) destroy_logger(ctx->logger);
     if (ctx->config) config_free(ctx->config);
+    
+    //vaalid free
+    if(ctx->postService) postService_destroy(&(ctx->postService));
+    if(ctx->tagService) tagService_destroy(&(ctx->tagService));
     free(ctx);
 }

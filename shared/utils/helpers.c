@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "helpers.h"
+#include "dynamic_array/dynamic_array.h"
 
 char* my_strdup(char* str) {
     if (str == NULL) return NULL;
@@ -27,4 +29,76 @@ char* slug_converter(const char* title){
     slug_output[i] = '\0';
     return slug_output;
 
+}
+
+
+repsonseMsg* create_success_response(void* data,int code_status){
+    repsonseMsg* res = malloc(sizeof(repsonseMsg));
+    if(res==NULL) return NULL;
+    res->data = data;
+    res->err_msg= NULL;
+    res->errMsgtype = NULL;
+    res->code_status = code_status;
+    return res;
+}
+
+repsonseMsg* create_error_response(char* msgType, char* messages, int code_status){
+    repsonseMsg* res = malloc(sizeof(repsonseMsg));
+    if(res==NULL) return NULL;
+    res->data = NULL;
+    res->err_msg= my_strdup(messages);
+    res->errMsgtype = my_strdup(msgType);
+    res->code_status = code_status;
+    return res;
+}
+repsonseMsg* create_multiError_response(char* msgType, dynamic_array* messages, int code_status){
+    repsonseMsg* res = malloc(sizeof(repsonseMsg));
+    if(res==NULL) return NULL;
+    res->data = NULL;
+    res->err_msg= messages;
+    res->errMsgtype = my_strdup(msgType);
+    res->code_status = code_status;
+    return res;
+}
+
+void destroy_responseMsg(repsonseMsg* res){
+    if(res == NULL)return ;
+    if(res->errMsgtype)free(res->errMsgtype);
+    free(res);
+}
+
+char* read_until(int socket, const char* delimiter) {
+    char buffer[4096];
+    int total_bytes = 0;
+    int delim_len = strlen(delimiter);
+    
+    while (total_bytes < sizeof(buffer) - 1) {
+        int bytes = recv(socket, buffer + total_bytes, 1, 0);
+        if (bytes <= 0) return NULL;
+        
+        total_bytes++;
+        buffer[total_bytes] = '\0';
+        
+        if (total_bytes >= delim_len && 
+            strcmp(buffer + total_bytes - delim_len, delimiter) == 0) {
+            buffer[total_bytes - delim_len] = '\0';
+            return strdup(buffer);
+        }
+    }
+    return NULL;
+}
+
+int read_exact_bytes(int socket, char* body_buffer, int content_length) {
+    int total_read = 0;
+    
+    while (total_read < content_length) {
+        int bytes = recv(socket, body_buffer + total_read, 
+                        content_length - total_read, 0);
+        if (bytes <= 0) return -1;  
+        
+        total_read += bytes;
+    }
+    
+    body_buffer[content_length] = '\0';  
+    return 0;  
 }

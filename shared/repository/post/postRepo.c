@@ -138,5 +138,31 @@ dynamic_array* get_Posts_byTagId(postRepo* postRepo,int tag_id){
     return posts_array;
 }
 
+int remove_post(postRepo* postRepo,int post_id){
+    sqlite3_stmt *res;
+    const char *sql = "UPDATE posts SET is_deleted = 1  WHERE post_id = ?";
+    int rc = sqlite3_prepare_v2(postRepo->database->db, sql, -1, &res, 0);
+     if (rc == SQLITE_OK){
+        sqlite3_bind_int(res, 1,post_id);	
+	    if (sqlite3_step(res) != SQLITE_DONE) {
+	        printf("POST DELETE failed: %s\n", sqlite3_errmsg(postRepo->database->db));
+            return -1;
+	    } else {
+	        printf("POST DELETE successful!\n");
+	        
+	    }
+     }else {
+	    fprintf(stderr, "Failed to execute DELETE POST statement: %s\n", sqlite3_errmsg(postRepo->database->db));
+	    sqlite3_finalize(res);
+        return -1;  	
+	}
+    sqlite3_finalize(res);
+    return 1;
+}
+
+post* update_post(postRepo* postRepo,post* new_post){
+    sqlite3_stmt *res;
+    const char *sql = "UPDATE posts SET title=?,body=?,author=?,status=?, WHERE post_id = ?";
+}
 
 

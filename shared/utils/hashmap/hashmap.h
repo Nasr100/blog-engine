@@ -1,7 +1,21 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
 
-typedef struct hashmap hashmap_t;
+#define MAX_KEY_LENGTH 256
+
+
+typedef struct key_value {
+    char key[MAX_KEY_LENGTH];
+    void* value;
+    struct key_value* next;
+} key_value_t;
+
+typedef struct hashmap {
+    key_value_t** array;
+    int capacity;
+    int count;
+}hashmap_t;
+
 
 // Generic hashmap interface
 hashmap_t* hashmap_create(void);

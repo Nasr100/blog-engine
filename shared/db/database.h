@@ -15,6 +15,7 @@ void database_close(database* database);
 // transaction
 int database_begin_transaction(database* database);
 int database_commit(database* database);
+int rollback(database* database);
 
 
 #endif
