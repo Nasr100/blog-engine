@@ -184,14 +184,14 @@ int hashmap_size(const hashmap_t* map) {
 void hashmap_destroy(hashmap_t* map) {
     if(!map) return;
     
-    // for(int i = 0; i < map->capacity; i++) {
-    //     key_value_t* current = map->array[i];
-    //     while(current != NULL) {
-    //         key_value_t* next = current->next;
-    //         free(current);
-    //         current = next;
-    //     }
-    // }
+    for(int i = 0; i < map->capacity; i++) {
+        key_value_t* current = map->array[i];
+        while(current != NULL) {
+            key_value_t* next = current->next;
+            free(current);
+            current = next;
+        }
+    }
     
     if(map->array)free(map->array);
     map->array = NULL;

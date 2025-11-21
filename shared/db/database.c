@@ -18,7 +18,7 @@ database* database_connect(char* db_path){
 	int rc =  sqlite3_open(database->db_path,&(database->db));
 	 
     if (rc != SQLITE_OK) {
-        pritnf("Cannot open database: %s\n", sqlite3_errmsg(database->db));
+        printf("Cannot open database: %s\n", sqlite3_errmsg(database->db));
         sqlite3_close(database->db);
         return NULL;
     }   
@@ -64,5 +64,6 @@ void destroy_database(database** database_ptr){
 }
 void database_close(database* database){
     sqlite3_close(database->db);
+    database->db = NULL;
     destroy_database(&database);
 }

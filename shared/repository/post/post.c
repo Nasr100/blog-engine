@@ -32,21 +32,29 @@ post* create_post(size_t id,char* title,char*slug,char* body,char* author,char* 
 void destroy_post(post* post){
     if(post == NULL) return ;
     if(post->author)free(post->author);
+    post->author =NULL;
     if(post->title)free(post->title);
+    post->title =NULL;
     if(post->body)free(post->body);
+    post->body =NULL;
     if(post->date)free(post->date);
+    post->date =NULL;
     if(post->slug)free(post->slug);
+    post->slug =NULL;
     if(post->status)free(post->status);
-
+    post->status =NULL;
     if(post->tags != NULL){
         for(int i = 0;i<post->tags->count;i++){
             tag* t = (tag*)post->tags->array[i];
             if(t) destroy_tag(t);
+            t=NULL;
         }
         dynamic_array_destroy(post->tags);
+        post->tags=NULL;
     }
 
     if(post->user) destroy_user(post->user);
+    post->user=NULL;
     
     
 }

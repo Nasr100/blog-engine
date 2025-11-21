@@ -61,7 +61,7 @@ repsonseMsg* postService_add_post(postService* postService,postCreateDto* new_po
 }
 
 repsonseMsg* postService_delete_post(postService* postService,int post_id){
-    if(postService == NULL) return -1;
+    if(postService == NULL) return NULL;
     post* p = select_PostById(postService->postRepo,post_id);
     if(p!=NULL){
         if(remove_post(postService->postRepo,post_id) ==-1){

@@ -2,8 +2,7 @@
 
 #define REQUEST_PARSER_H
 #include "../../shared/utils/hashmap/hashmap.h"
-#include "app_context.h"
-#include "server.h"
+#include "types.h"
 typedef struct http_request{
 	char method[10];
 	char request_uri[1024];

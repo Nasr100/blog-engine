@@ -24,6 +24,8 @@ void destroy_httpMessage(http_message* msg){
 				current = next;
 			}
 		}
+		free(msg->headers_map->array);
+		free(msg->headers_map);
 	}
 	msg->headers_map=NULL;
 	puts("HTTP MESSAGE OBJECT FREED SUCCEFFULLY!");

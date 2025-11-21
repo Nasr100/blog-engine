@@ -124,11 +124,12 @@ void log_error(logger_t* log,char* str,...){
 
 
 void destroy_logger(logger_t* logger){
-	if(logger){
+	if(logger == NULL)return;
 		if(logger->fptr){
 			fclose(logger->fptr);
 		}
+		logger->fptr = NULL;
 		free(logger);
-	}
-	
 }
+	
+

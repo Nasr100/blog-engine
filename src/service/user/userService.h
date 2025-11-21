@@ -1,7 +1,7 @@
 #ifndef USERSERVICE_H
 #define USERSERVICE_H
 
-
+#include "../../../shared/repository/user/user.h"
 typedef struct userService userService;
 
 user* userService_add_user(userService* userService,user* user);

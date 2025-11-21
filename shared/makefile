@@ -1,6 +1,6 @@
 # Makefile for shared components - ORGANIZED FOLDERS
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -D_POSIX_C_SOURCE=200809L -I. -Iconfig -Idb -Ilibs -Ilogger -Iutils/hashmap -Iutils
+CFLAGS = -Wall -Wextra -std=c99 -D_POSIX_C_SOURCE=200809L -I. -Iconfig -Idb -Ilibs -Ilogger -Irepository/post -Irepository/tag -Irepository/user -Irepository/post_tag -Iutils/hashmap -Iutils/stack -Iutils/dynamic_array -Iutils
 AR = ar
 ARFLAGS = rcs
 
@@ -14,15 +14,19 @@ DB_LIB = $(LIB_DIR)/libdb.a
 CORE_LIB = $(LIB_DIR)/libcore.a
 LOGGER_LIB = $(LIB_DIR)/liblogger.a
 UTILS_LIB = $(LIB_DIR)/libutils.a
+REPOS_LIB = $(LIB_DIR)/librepo.a
+MODELS_LIB = $(LIB_DIR)/libmodel.a
 
-ALL_LIBS = $(CONFIG_LIB) $(DB_LIB) $(CORE_LIB) $(LOGGER_LIB) $(UTILS_LIB)
+ALL_LIBS = $(CONFIG_LIB) $(DB_LIB) $(CORE_LIB) $(LOGGER_LIB) $(UTILS_LIB) $(REPOS_LIB) $(MODELS_LIB)
 
 # Source files
 CONFIG_SRCS = config/config.c
-DB_SRCS = db/blog_db.c db/database.c
-CORE_SRCS = libs/entity.c libs/md4c.c libs/md4c-html.c libs/sqlite3.c
+DB_SRCS =  db/database.c
+CORE_SRCS = libs/entity.c libs/md4c.c libs/md4c-html.c libs/sqlite3.c libs/cJSON.c
 LOGGER_SRCS = logger/logger.c
-UTILS_SRCS = utils/hashmap/hashmap.c utils/file_handling.c utils/file_utils.c
+UTILS_SRCS = utils/hashmap/hashmap.c utils/file_handling.c utils/file_utils.c utils/dynamic_array/dynamic_array.c utils/stack/stack.c utils/helpers.c
+MODELS_SRCS = repository/tag/tag.c repository/post/post.c repository/user/user.c repository/post_tag/post_tag.c
+REPOS_SRCS = repository/tag/tagRepo.c repository/post/postRepo.c repository/user/userRepo.c repository/post_tag/post_tagRepo.c
 
 # Test programs
 CONFIG_TEST = config/test_config
@@ -34,8 +38,10 @@ DB_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(DB_SRCS:.c=.o)))
 CORE_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(CORE_SRCS:.c=.o)))
 LOGGER_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(LOGGER_SRCS:.c=.o)))
 UTILS_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(UTILS_SRCS:.c=.o)))
+MODELS_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(MODELS_SRCS:.c=.o)))
+REPOS_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(REPOS_SRCS:.c=.o)))
 
-ALL_OBJS = $(CONFIG_OBJS) $(DB_OBJS) $(CORE_OBJS) $(LOGGER_OBJS) $(UTILS_OBJS)
+ALL_OBJS = $(CONFIG_OBJS) $(DB_OBJS) $(CORE_OBJS) $(LOGGER_OBJS) $(UTILS_OBJS) $(MODELS_OBJS) $(REPOS_OBJS)
 
 .PHONY: all clean test
 
@@ -79,6 +85,14 @@ $(UTILS_LIB): $(UTILS_OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 	@echo "Built utils library: $@"
 
+$(REPOS_LIB): $(REPOS_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built REPOS library: $@"
+
+$(MODELS_LIB): $(MODELS_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built MODELS library: $@"
+
 # Pattern rules for object files - ALL IN OBJ FOLDER
 $(OBJ_DIR)/%.o: config/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -87,6 +101,24 @@ $(OBJ_DIR)/%.o: db/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: libs/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: repository/tag/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: repository/post/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: repository/user/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: repository/post_tag/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: utils/dynamic_array/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: utils/stack/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # SPECIAL RULE FOR SQLITE3 - with thread safety

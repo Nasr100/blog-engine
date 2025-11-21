@@ -22,11 +22,16 @@ user* create_user(int id,char* email,char*firstname,char* lastname,char* passwor
 }
 
 void destroy_user(user* user){
-    if(user==NULL)return NULL;
+    if(user==NULL)return ;
     if(user->email)free(user->email);
+    user->email = NULL;
     if(user->password)free(user->password);
+    user->password = NULL;
     if(user->username)free(user->username);
+    user->username = NULL;
     if(user->firstname)free(user->firstname);
+    user->firstname = NULL;
     if(user->lastname)free(user->lastname);
+    user->lastname = NULL;
     free(user);
 }

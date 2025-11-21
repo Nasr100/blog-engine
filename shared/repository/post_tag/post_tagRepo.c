@@ -12,7 +12,8 @@
 static int callback_get_tagPosts(void *user_data, int argc, char **argv, char **azColName) {
     dynamic_array* ar = (dynamic_array*)user_data;
     int id = atoi(argv[0]);
-    tag* new_tag = create_tag(id,argv[1],argv[2]);
+    int is_deleted = atoi(argv[2]);
+    tag* new_tag = create_tag(id,argv[1],is_deleted);
     dynamic_array_push_elem(ar,new_tag);
     return 0;
 }

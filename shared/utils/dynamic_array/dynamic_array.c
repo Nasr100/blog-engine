@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "dynamic_array.h"
+#include "../helpers.h"
 
 
 dynamic_array* dynamic_array_create(){
@@ -65,6 +66,7 @@ void dynamic_array_destroy(dynamic_array* arr) {
     
     if (arr->array != NULL) {
         free(arr->array);
+        arr->array=NULL;
     }
     free(arr);
 }

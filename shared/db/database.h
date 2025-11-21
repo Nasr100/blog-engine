@@ -10,7 +10,7 @@
     char* err_msg;
 }database;
 // Database connection
-int database_connect(char* db_path);
+database* database_connect(char* db_path);
 void database_close(database* database);
 // transaction
 int database_begin_transaction(database* database);

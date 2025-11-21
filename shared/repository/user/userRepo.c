@@ -12,12 +12,13 @@ user* insert_user(userRepo* userRepo,user* user){
 	    sqlite3_bind_text(res, 2,user->password,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_text(res, 3,user->firstname,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_text(res, 4,user->lastname,-1,SQLITE_TRANSIENT);	
-	    sqlite3_bind_text(res, 5,user->username,-1,SQLITE_TRANSIENT);	
-	    sqlite3_bind_text(res, 6,user->sex,-1,SQLITE_TRANSIENT);	
+	    sqlite3_bind_text(res, 5,user->username,-1,SQLITE_TRANSIENT);
+        char sex_str[2] = {user->sex,'\0'};	
+	    sqlite3_bind_text(res, 6,sex_str,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_int(res, 7,user->age);	
 	    sqlite3_bind_int(res, 8,user->is_admin);	
 	    if (sqlite3_step(res) != SQLITE_DONE) {
-	        printf("Insert failed: %s\n", sqlite3_errmsg(userRepo->database->err_msg));
+	        printf("Insert failed: %s\n", sqlite3_errmsg(userRepo->database));
             return NULL;
 	    } else {
 	        printf("Insert successful!\n");
@@ -70,7 +71,8 @@ user* update_user(userRepo* userRepo,user* user){
         sqlite3_bind_text(res, 1,user->username,-1,SQLITE_TRANSIENT);	
         sqlite3_bind_text(res, 1,user->firstname,-1,SQLITE_TRANSIENT);	
         sqlite3_bind_text(res, 1,user->lastname,-1,SQLITE_TRANSIENT);	
-        sqlite3_bind_text(res, 1,user->sex,-1,SQLITE_TRANSIENT);	
+        char sex_str[2] = {user->sex, '\0'};
+        sqlite3_bind_text(res, 1,sex_str,-1,SQLITE_TRANSIENT);	
         sqlite3_bind_int(res, 1,user->age);
         sqlite3_bind_int(res, 1,user->is_admin);
         sqlite3_bind_int(res, 1,user->user_id);
@@ -103,15 +105,15 @@ user* select_byUsername(userRepo* userRepo,char* username){
     sqlite3_bind_text(res,1,username,-1,SQLITE_TRANSIENT);
     if(sqlite3_step(res)== SQLITE_ROW){
             int user_id = sqlite3_column_int(res, 0);
-	        const unsigned char *email = sqlite3_column_text(res, 1);
-	        const unsigned char *firstname = sqlite3_column_text(res, 2);
-	        const unsigned char *lastname = sqlite3_column_text(res, 3);
-	        const unsigned char *username = sqlite3_column_text(res, 4);
+	          char *email = sqlite3_column_text(res, 1);
+	          char *firstname = sqlite3_column_text(res, 2);
+	          char *lastname = sqlite3_column_text(res, 3);
+	          char *username = sqlite3_column_text(res, 4);
             int age = sqlite3_column_int(res, 5);
-	        const unsigned char *sex = sqlite3_column_text(res, 6);
+	          char *sex = sqlite3_column_text(res, 6);
 	        int is_admin = sqlite3_column_int(res, 7);
 	        int is_deleted = sqlite3_column_int(res, 8);
-            const unsigned char *password = sqlite3_column_text(res, 9);
+              char *password = sqlite3_column_text(res, 9);
 
             user = create_user(user_id,email,password,firstname,lastname,username,age,sex,is_deleted,is_admin);
     }

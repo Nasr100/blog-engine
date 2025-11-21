@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* ===== CSS Variables ===== */
+:root {
+  /* Light theme variables */
+  --color-primary: #08090a;
+  --color-secondary: rgb(87, 85, 85);
+  --color-accent: rgba(44, 39, 156, 0.836);
+  --color-gray-light: #F6F6F6;
+  --color-gray-medium: rgb(145, 145, 145);
+  --color-gray-dark: rgb(23, 23, 23);
+  --color-hover: rgba(86, 39, 101, 0.10);
+  --color-like-hover: #f57d7d;
+  --shadow-card: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  --border-radius: 5px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 50px;
+  --spacing-xxl: 70px;
+  
+  /* Backgrounds */
+  --bg-primary: #F6F6F6;
+  --bg-card: #FFFFFF;
+  --bg-header: #FFFFFF;
+  
+  /* Text */
+  --text-primary: #08090a;
+  --text-secondary: rgb(87, 85, 85);
+  --text-heading: rgb(23, 23, 23);
+}
+
+/* ===== Dark Theme Variables ===== */
+[data-theme="dark"] {
+  /* Backgrounds - True Black OLED */
+  --bg-primary: #252423;
+  --bg-card: #181a1b;
+  --bg-header: #252423;
+  
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #888888;
+  --text-heading: #FFFFFF;
+  
+  /* Interactive Colors */
+  --color-accent: #BB86FC;
+  --color-hover: #2D1E36;
+  --color-like-hover: #BB86FC;
+  --shadow-card: rgba(255, 255, 255, 0.05) 0px 0px 0px 1px;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  min-height: 100vh;
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ===== Layout ===== */
+.home-header {
+  margin: 0 auto var(--spacing-xl) auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.home-main {
+  width: 100%;
+  margin-top: var(--spacing-xxl);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Components ===== */
+
+/* Blog Header */
+.blog-header {
+    background-color: var(--bg-header);
+    width: 100%;
+    padding: var(--spacing-xs) 0;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.blog-header h1 {
+  margin-bottom: 2px;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.header-span {
+  color: var(--text-secondary);
+}
+
+/* Cards */
+.card {
+  box-shadow: var(--shadow-card);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-card);
+  width: 100%;
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-md);
+  transition: all 0.3s ease;
+}
+
+.card-header {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.card-main {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Typography */
+h2 {
+  font-weight: bold;
+  color: var(--text-heading);
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+h2 a:hover {
+  color: var(--color-accent);
+}
+
+/* Tags */
+.tags {
+  margin-top: var(--spacing-sm);
+  margin-left: -8px;
+  font-size: 0.875rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: var(--border-radius);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background-color: var(--color-hover);
+  color: var(--text-secondary);
+  border: 1px solid var(--text-secondary);
+}
+
+/* Likes */
+.likes {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm);
+  margin-left: -10px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.likes:hover {
+  background-color: #332940;
+  color: var(--color-like-hover);
+}
+
+.likes-number {
+  margin-left: var(--spacing-xs);
+  font-size: 0.875rem;
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--text-secondary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  background: var(--color-hover);
+  transform: scale(1.1);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-primary);
+}
+
+/* Hide moon icon in light mode, sun icon in dark mode */
+[data-theme="dark"] .theme-toggle .sun-icon,
+.theme-toggle .moon-icon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon,
+.theme-toggle .sun-icon {
+  display: block;
+}
+
+/* ===== Responsive Design ===== */
+
+/* Medium devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+  .home-main {
+    width: 90%;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+  .home-main {
+    width: 50%;
+  }
+  
+  .card {
+    padding: var(--spacing-lg);
+  }
+}

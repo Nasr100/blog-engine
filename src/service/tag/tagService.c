@@ -16,9 +16,9 @@ repsonseMsg* tagService_add_tag(tagService* tagService,tagCreateDto* new_tag){
     if(tagService==NULL) return NULL;
     tag* t = select_tagByName(tagService->tagRepo,new_tag->name);
     if(t == NULL){
-        tag* new_tag = create_tag(-1,new_tag->name,0);
-        new_tag = insert_tag(tagService->tagRepo,new_tag);
-        return create_success_response(new_tag,201);
+        tag* ntag = create_tag(-1,new_tag->name,0);
+        ntag = insert_tag(tagService->tagRepo,ntag);
+        return create_success_response(ntag,201);
     }
     destroy_tag(t);
     return create_error_response("err","tag alredy exists",400);

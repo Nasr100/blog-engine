@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "helpers.h"
-#include "dynamic_array/dynamic_array.h"
 
 char* my_strdup(char* str) {
     if (str == NULL) return NULL;
@@ -64,6 +63,7 @@ repsonseMsg* create_multiError_response(char* msgType, dynamic_array* messages, 
 void destroy_responseMsg(repsonseMsg* res){
     if(res == NULL)return ;
     if(res->errMsgtype)free(res->errMsgtype);
+    res->errMsgtype = NULL;
     free(res);
 }
 
@@ -101,4 +101,15 @@ int read_exact_bytes(int socket, char* body_buffer, int content_length) {
     
     body_buffer[content_length] = '\0';  
     return 0;  
+}
+
+int is_static(char* uri){
+	return strstr(uri, ".css") || strstr(uri, ".js") || 
+           strstr(uri, ".png") || strstr(uri, ".jpg") ||
+           strcmp(uri, "/favicon.ico") == 0;
+}
+
+char* get_last_uri(char* path) {
+    char* basename = strrchr(path, '/');
+    return basename ? basename + 1 : path;
 }

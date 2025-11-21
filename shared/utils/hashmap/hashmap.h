@@ -23,7 +23,7 @@ int hashmap_insert(hashmap_t* map, const char* key, void* value);
 void* hashmap_get( hashmap_t* map, const char* key);
 void hashmap_destroy(hashmap_t* map);
 int hashmap_size(const hashmap_t* map);
-
+int hashmap_insert_str(hashmap_t* map, const char* key, char* value);
 // Optional: with custom destructor for values
 void hashmap_destroy_with_callback(hashmap_t* map, void (*free_value)(void*));
 

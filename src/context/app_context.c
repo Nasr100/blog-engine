@@ -8,7 +8,6 @@
 AppContext* app_context_create(void) {
     AppContext* ctx = malloc(sizeof(AppContext));
     if (!ctx) return NULL;
-    
     memset(ctx, 0, sizeof(AppContext));
     
     //load config
@@ -27,7 +26,7 @@ int app_context_init(AppContext* ctx) {
     ctx->logger = create_logger(config_get_log_file(ctx->config));
     
     //database coonnect
-    ctx->database = database_connect(config_get_db_path(ctx->config));
+    ctx->database = database_connect((char*)config_get_db_path(ctx->config));
     if (ctx->database == NULL) {
         return -1;
     }
@@ -39,21 +38,9 @@ int app_context_init(AppContext* ctx) {
         log_error(ctx->logger, "Failed to create router");
         return -1;
     }
-    ctx->router->get_routes = hashmap_create();
-    ctx->router->post_routes = hashmap_create();
+    
+    routes_init(ctx->router);
 
-     if (!ctx->router->get_routes || !ctx->router->post_routes) {
-        if (ctx->router->get_routes) hashmap_destroy(ctx->router->get_routes);
-        if (ctx->router->post_routes) hashmap_destroy(ctx->router->post_routes);
-        destroy_router(ctx->router);
-        log_error(ctx->logger, "Failed to create hashmaps router");
-        return -1;
-    }
-    //get routes
-    hashmap_insert(ctx->router->get_routes, "/home", render_home);
-    hashmap_insert(ctx->router->get_routes, "/post/*", render_article);
-
-    //post routes
     
 
 
@@ -77,12 +64,23 @@ void app_context_destroy(AppContext* ctx) {
     if (!ctx) return;
     
     if (ctx->router) destroy_router((ctx->router)); 
+    ctx->router = NULL;
     if (ctx->database) database_close(ctx->database);
+    ctx->database= NULL;
     if (ctx->logger) destroy_logger(ctx->logger);
+    ctx->logger = NULL;
     if (ctx->config) config_free(ctx->config);
-    
+    ctx->config = NULL;
     //vaalid free
     if(ctx->postService) postService_destroy(&(ctx->postService));
     if(ctx->tagService) tagService_destroy(&(ctx->tagService));
     free(ctx);
+}
+
+logger_t* app_context_get_logger(AppContext* ctx) {
+    return ctx->logger;
+}
+
+router* app_context_get_router(AppContext* ctx) {
+    return ctx->router;
 }

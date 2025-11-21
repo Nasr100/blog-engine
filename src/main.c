@@ -17,9 +17,10 @@
 
 
 int main(){
-	server* server = create_server("8080","blogServer",20);
+	server* server = create_server(8080,"blogServer",20);
 	while(server->is_running){
 		server_loop(server);
 	}
+	destroy_server(server);
 	return 0;
 }

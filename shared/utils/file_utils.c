@@ -23,7 +23,10 @@ char* file_read(char* filename) {
     return buffer;
 }
 
-char* file_get_basename(char* path) {
-    char* basename = strrchr(path, '/');
-    return basename ? basename + 1 : path;
+char* file_get_basename(const char* path) {
+    char* path_copy = strdup(path);
+    char* base = strdup(basename(path_copy));
+    free(path_copy);
+    return base;
 }
+

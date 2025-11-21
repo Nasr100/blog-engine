@@ -160,9 +160,9 @@ int remove_post(postRepo* postRepo,int post_id){
     return 1;
 }
 
-post* update_post(postRepo* postRepo,post* new_post){
-    sqlite3_stmt *res;
-    const char *sql = "UPDATE posts SET title=?,body=?,author=?,status=?, WHERE post_id = ?";
-}
+// post* update_post(postRepo* postRepo,post* new_post){
+//     sqlite3_stmt *res;
+//     const char *sql = "UPDATE posts SET title=?,body=?,author=?,status=?, WHERE post_id = ?";
+// }
 
 

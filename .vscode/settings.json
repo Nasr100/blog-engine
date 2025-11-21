@@ -41,6 +41,15 @@
         "tagdto.h": "c",
         "unistd.h": "c",
         "server.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "postcontroller.h": "c",
+        "tag_serialization.h": "c",
+        "user_serialization.h": "c",
+        "cjson.h": "c",
+        "post_serializer.h": "c",
+        "types.h": "c",
+        "select.h": "c",
+        "netdb.h": "c",
+        "inet.h": "c"
     }
 }
