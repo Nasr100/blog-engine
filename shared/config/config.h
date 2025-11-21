@@ -10,6 +10,7 @@ typedef struct {
     char* imgs_path;
     char* log_file;
     char* base_dir;
+    char* html_path;
 } BlogConfig;
 
 // Constructor/Destructor
@@ -29,5 +30,7 @@ const char* config_get_css_path(const BlogConfig* config);
 const char* config_get_js_path(const BlogConfig* config);
 const char* config_get_imgs_path(const BlogConfig* config);
 const char* config_get_log_file(const BlogConfig* config);
+const char* config_get_html_path(const BlogConfig* config);
+;
 
 #endif

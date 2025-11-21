@@ -12,7 +12,7 @@ typedef struct router{
 
 void match_route(http_message* message,int socket,AppContext* ctx);
 router* create_router();
-void routes_init(router* router);
+void routes_api_init(router* router);
 void destroy_router(router* router);
 
 #endif

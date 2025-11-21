@@ -113,3 +113,42 @@ char* get_last_uri(char* path) {
     char* basename = strrchr(path, '/');
     return basename ? basename + 1 : path;
 }
+
+void pop_str(char** original_string) {
+    if (original_string == NULL || *original_string == NULL) {
+        return;
+    }
+    
+    size_t len = strlen(*original_string);
+    if (len == 0) {
+        free(*original_string);
+        *original_string = NULL;
+        return;
+    }
+    
+    char* new_string = malloc(len);  
+    if (new_string == NULL) {
+        return;  
+    }
+    
+    strncpy(new_string, *original_string, len - 1);
+    new_string[len - 1] = '\0';
+    
+    free(*original_string);
+    *original_string = new_string;
+    
+}
+
+int is_api(char* uri){
+    char* temp = strtok(uri,"/");
+    if(strcmp(temp,"api")) return 1;
+    return 0; 
+}
+
+char* get_afterLastDelimiter(const char *filename,char delimiter) {
+    const char *dot = strrchr(filename, delimiter); 
+    if (!dot || dot == filename) { 
+        return ""; 
+    }
+    return (char *)(dot + 1);
+}

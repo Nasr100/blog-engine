@@ -13,7 +13,7 @@ typedef struct router router;
 typedef struct AppContext{
     logger_t* logger;
     database* database;
-    router* router;
+    router* api_router;
     postService* postService;        
     tagService* tagService;        
     BlogConfig* config;
@@ -21,7 +21,7 @@ typedef struct AppContext{
 
 AppContext* app_context_create(void);
 void app_context_destroy(AppContext* ctx);
-int app_context_init(AppContext* ctx);  
+AppContext* app_context_init(AppContext* ctx) ;
 logger_t* app_context_get_logger(AppContext* ctx);
 router* app_context_get_router(AppContext* ctx);
 #endif

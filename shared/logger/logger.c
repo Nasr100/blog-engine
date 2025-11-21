@@ -16,16 +16,24 @@
 }
 
 logger_t* create_logger(const char* filename) {
+	puts("CREATING LOGGER .....");
     logger_t* log = malloc(sizeof(logger_t));
     if(log != NULL){
+		puts("MEMORY allocated suuccefully .....");
         log->log_lvl = LOG_INFO;
         log->fptr = NULL;
-        if(filename) {
+        if(filename){
+			puts("log filename got it");
             strncpy(log->filename, filename, sizeof(log->filename)-1);
             log->fptr = fopen(filename, "a");
+			if(log->fptr == NULL){
+				puts("couldnt open log file");
+				return NULL;
+			}
         }
         return log;
     }
+	puts("FAILED TO ALLOCATE MEMORY .....");
     return NULL;
 }
 

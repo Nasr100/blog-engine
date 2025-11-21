@@ -138,6 +138,11 @@ static int parse_env_line(BlogConfig* config, const char* line) {
         free(config->log_file);
         config->log_file = my_strdup(value);
     }
+    else if (strcmp(key, "HTML_PATH") == 0) {
+        free(config->html_path);
+        config->html_path = my_strdup(value);
+    }
+   
     
     free(work_line);
     return 0;
@@ -182,6 +187,7 @@ void config_free(BlogConfig* config) {
     free(config->js_path);
     free(config->imgs_path);
     free(config->log_file);
+    free(config->html_path);
     free(config);
 }
 
@@ -209,6 +215,7 @@ int config_load_from_env(BlogConfig* config) {
     config->js_path = get_env_value("JS_PATH", "./public/js");
     config->imgs_path = get_env_value("IMGS_PATH", "./public/images");
     config->log_file = get_env_value("LOG_FILE", "blog.log");
+    config->html_path = get_env_value("HTML_PATH", "./public/html");
     
     return 0;
 }
@@ -401,34 +408,45 @@ int config_expand_variables(BlogConfig* config) {
             config->log_file = expanded;
         }
     }
+
+    if (config->html_path) {
+        expanded = expand_string_variables(config->html_path, config);
+        if (expanded) {
+            free(config->html_path);
+            config->html_path = expanded;
+        }
+    }
     
     return 0;
 }
 // Getters with fallback defaults
 const char* config_get_db_path(const BlogConfig* config) {
-    return config->db_path ? config->db_path : "./data/blog.db";
+    return config->db_path ? config->db_path : "./data/blogdbV2.db";
 }
 
 const char* config_get_blogs_path(const BlogConfig* config) {
-    return config->blogs_path ? config->blogs_path : "./posts";
+    return config->blogs_path ? config->blogs_path : "./public/blogs";
 }
 
 const char* config_get_blogs_archive(const BlogConfig* config) {
-    return config->blogs_archive ? config->blogs_archive : "./archive";
+    return config->blogs_archive ? config->blogs_archive : "./public/archive";
 }
 
 const char* config_get_css_path(const BlogConfig* config) {
-    return config->css_path ? config->css_path : "./public/css";
+    return config->css_path ? config->css_path : "./src/static/template/css";
 }
 
 const char* config_get_js_path(const BlogConfig* config) {
-    return config->js_path ? config->js_path : "./public/js";
+    return config->js_path ? config->js_path : "./src/static/template/js";
 }
 
 const char* config_get_imgs_path(const BlogConfig* config) {
-    return config->imgs_path ? config->imgs_path : "./public/images";
+    return config->imgs_path ? config->imgs_path : "./src/static/template/images";
 }
 
 const char* config_get_log_file(const BlogConfig* config) {
-    return config->log_file ? config->log_file : "blog.log";
+    return config->log_file ? config->log_file : "./src/bloglog.txt";
+}
+const char* config_get_html_path(const BlogConfig* config) {
+    return config->html_path ? config->html_path : "./src/static/template/html";
 }

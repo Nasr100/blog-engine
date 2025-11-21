@@ -9,12 +9,6 @@
 #include "./include/server.h"
 
 #define PORT 8080
-/*
-
-
-*/
-
-
 
 int main(){
 	server* server = create_server(8080,"blogServer",20);

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h> 
 #include "../include/server.h"
 #include "../../shared/utils/helpers.h"
+#include "../include/request_parser.h"
 #include "../include/app_context.h"
 #include <errno.h>
 
@@ -28,6 +30,7 @@ static int bind_socket(server* server){
 
 server* create_server(int port,char* servername,int max_clients){
     puts("CREATING SERVER ...");
+    printf("create_server called with port: %d\n", port);
     int socketFd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketFd < 0) {
 		printf("server_logger,Error at socket(): %s\n", strerror(errno));
@@ -40,29 +43,32 @@ server* create_server(int port,char* servername,int max_clients){
         return NULL;
     }
     s->server_socket = socketFd;
+    
     s->ctx = app_context_create();
+    s->ctx = app_context_init(s->ctx);
      puts("APP CONTEXT CREATED ...");
     if(s->ctx == NULL){
         free(s);
         return NULL;
     }
     printf("APP CONTEXT CREATED at address: %p\n", s->ctx);
-if (s->ctx) {
-    logger_t* logger = app_context_get_logger(s->ctx);
-    printf("Logger pointer: %p\n", logger);
-    
-    if (logger == NULL) {
-        printf("ERROR: Logger is NULL!\n");
-        return NULL;
+    if (s->ctx) {
+        logger_t* logger = app_context_get_logger(s->ctx);
+        printf("Logger pointer: %p\n", logger);
+        
+        if (logger == NULL) {
+            printf("ERROR: Logger is NULL!\n");
+            return NULL;
+        }
     }
-}
+    s->port = port;
     if(bind_socket(s)!=0){
         app_context_destroy(s->ctx);
         free(s);
         return NULL;
     }
     s->max_clients = max_clients;
-    s->port = port;
+    
     s->is_running = 1;
     s->name = my_strdup(servername);
     s->master = malloc(sizeof(fd_set));

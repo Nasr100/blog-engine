@@ -44,7 +44,7 @@ int database_commit(database* database){
     }
     return rc;
 }
-int rollback(database* database){
+int database_rollback(database* database){
     int rc = sqlite3_exec(database->db, "ROLLBACK;", 0, 0, &database->err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", database->err_msg);

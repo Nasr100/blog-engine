@@ -23,4 +23,7 @@ char* read_until(int socket, const char* delimiter);
 int read_exact_bytes(int socket, char* body_buffer, int content_length);
 int is_static(char* uri);
 char* get_last_uri(char* path) ;
+void pop_str(char** original_string);
+int is_api(char* uri);
+char* get_afterLastDelimiter(const char *filename,char delimiter) ;
 #endif

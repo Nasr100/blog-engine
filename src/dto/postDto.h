@@ -12,7 +12,6 @@ typedef struct postCreateDto{
     int tags_id[MAX_TAGS];
     int count_tags;
     int user_id;
-    // int tags_id[MAX_TAGS];
 }postCreateDto;
 
 typedef struct postResponseDto{

@@ -29,27 +29,25 @@ router* create_router(){
 	
 	return router;
 }
-void routes_init(router* router){
+
+void routes_api_init(router* router){
 	//get routes 
-	hashmap_insert(router->get_routes,"/home",postController_get_AllpostsPreview);
-	hashmap_insert(router->get_routes,"/post/*",postController_get_postbyId);
+	hashmap_insert(router->get_routes,"/api/posts",postController_get_AllpostsPreview);
+	hashmap_insert(router->get_routes,"/api/post/*",postController_get_postbyId);
 }
 
 
 
 void match_route(http_message* message,int socket,AppContext* ctx){
 	route_handler_t handler = NULL;
-	
+	if(is_api((message->request->request_uri)+1) == 0){
+		render_static_file(socket,message->request->request_uri,ctx);
+	}
 	if(strcmp(message->request->method,"GET") == 0){
-		int res = is_static(message->request->request_uri);
-		if(res){
-			render_static_file(socket,message->request->request_uri,ctx);
-		}else{
-			handler = hashmap_get(ctx->router->get_routes,message->request->request_uri);
+			handler = hashmap_get(ctx->api_router->get_routes,message->request->request_uri);
 			char* temp = strstr(message->request->request_uri,"/post");
 			if(handler == NULL &&  temp!= NULL){
-				handler = hashmap_get(ctx->router->get_routes,"/post/*");
-				
+				handler = hashmap_get(ctx->api_router->get_routes,"/post/*");
 			}
 			if(handler == NULL){
 				send_json_response(socket,"{\"error\":\"route not found\"}",404);
@@ -60,7 +58,7 @@ void match_route(http_message* message,int socket,AppContext* ctx){
 		}
 		
 	}
-}
+
 
 void destroy_router(router* router){
 	if(router==NULL)return;

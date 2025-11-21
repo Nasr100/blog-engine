@@ -12,59 +12,73 @@ AppContext* app_context_create(void) {
     
     //load config
     ctx->config = config_create();
-    config_load(ctx->config);
+    if(ctx->config == NULL){
+        puts("CONFIG NOT CREATED");
+        return NULL;
+    }
+    if(config_load(ctx->config)==0){
+        puts("CONFIG LOADED SUCCEFULLY");
+    }else{
+        puts("CONFIG FAILD TO LOAD");
+    }
     config_expand_variables(ctx->config);
 
     return ctx;
 }
 
-int app_context_init(AppContext* ctx) {
-    if (!ctx) return -1;
+AppContext* app_context_init(AppContext* ctx) {
+    if (!ctx) return NULL;
     
     //init logger
 
     ctx->logger = create_logger(config_get_log_file(ctx->config));
+    if(ctx->logger == NULL){
+        puts("logger not created ");
+        return NULL;
+    }
     
     //database coonnect
     ctx->database = database_connect((char*)config_get_db_path(ctx->config));
     if (ctx->database == NULL) {
-        return -1;
+        return NULL;
     }
     
-    //init router
-    ctx->router = create_router();
+    //init  routers
+    ctx->api_router = create_router();
      
-    if (!ctx->router) {
-        log_error(ctx->logger, "Failed to create router");
-        return -1;
+    if (!ctx->api_router) {
+        log_error(ctx->logger, "Failed to create api router");
+        return NULL;
     }
-    
-    routes_init(ctx->router);
+    routes_api_init(ctx->api_router);
+
+
 
     
 
 
     //init repositories
     postRepo* postRepo = create_post_repo(ctx->database);
-    if(postRepo == NULL) return -1;
+    if(postRepo == NULL) return NULL;
     tagRepo* tagRepo = create_tagRepo(ctx->database);
-    if(tagRepo == NULL) return -1;
+    if(tagRepo == NULL) return NULL;
 
     //init services
     ctx->postService = postService_create(postRepo,tagRepo);
-    if(ctx->postService == NULL) return -1;
+    if(ctx->postService == NULL) return NULL;
 
     ctx->tagService = tagService_create(tagRepo);
-    if(ctx->tagService == NULL) return -1;
+    if(ctx->tagService == NULL) return NULL;
     log_info(ctx->logger, "App context initialized successfully!");
-    return 0;
+    return ctx;
 }
 
 void app_context_destroy(AppContext* ctx) {
     if (!ctx) return;
     
-    if (ctx->router) destroy_router((ctx->router)); 
-    ctx->router = NULL;
+    if (ctx->api_router) destroy_router((ctx->api_router)); 
+    ctx->api_router = NULL;
+
     if (ctx->database) database_close(ctx->database);
     ctx->database= NULL;
     if (ctx->logger) destroy_logger(ctx->logger);
@@ -82,5 +96,5 @@ logger_t* app_context_get_logger(AppContext* ctx) {
 }
 
 router* app_context_get_router(AppContext* ctx) {
-    return ctx->router;
+    return ctx->api_router;
 }
