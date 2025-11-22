@@ -3,7 +3,11 @@
 #include "../../dto/postDto.h"
 #include "../../../shared/repository/post/postRepo.h"
 #include "../../../shared/repository/tag/tagRepo.h"
-typedef struct postService postService;
+
+typedef struct postService{
+    postRepo* postRepo;
+    tagRepo* tagRepo;
+}postService;
 
 repsonseMsg* postService_add_post(postService* postService,postCreateDto* new_post);
 repsonseMsg* postService_delete_post(postService* postService,int post_id);

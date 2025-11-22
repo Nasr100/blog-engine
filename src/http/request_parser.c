@@ -8,29 +8,50 @@
 #include "../../shared/utils/helpers.h"
 
 void destroy_httpMessage(http_message* msg){
-	if(msg==NULL)return;
-	if(msg->body)free(msg->body);
-	msg->body = NULL;
-	if(msg->request)free(msg->request);
-	msg->request = NULL;
-	if(msg->headers_map){
-		hashmap_t* map = msg->headers_map ;
-			for(int i = 0; i < map->capacity; i++) {
-			key_value_t* current = map->array[i];
-			while(current != NULL) {
-				key_value_t* next = current->next;
-				if(current->value)free(current->value);
-				free(current);
-				current = next;
-			}
-		}
-		free(msg->headers_map->array);
-		free(msg->headers_map);
-	}
-	msg->headers_map=NULL;
-	puts("HTTP MESSAGE OBJECT FREED SUCCEFFULLY!");
+    if(msg == NULL) return;
+    
+    printf("Destroying http_message at: %p\n", (void*)msg);
+    
+    // Free body
+    if(msg->body) {
+        free(msg->body);
+        msg->body = NULL;
+    }
+    
+    // Destroy request object
+    if(msg->request) {
+        printf("Destroying HttpRequest at: %p\n", (void*)msg->request);
+        
+        // Free individual string fields
+        if(msg->request->method) {
+            free(msg->request->method);
+            msg->request->method = NULL;
+        }
+        if(msg->request->request_uri) {
+            free(msg->request->request_uri);
+            msg->request->request_uri = NULL;
+        }
+        if(msg->request->http_version) {
+            free(msg->request->http_version);
+            msg->request->http_version = NULL;
+        }
+        
+        // Free the request struct itself
+        free(msg->request);
+        msg->request = NULL;
+    }
+    
+    // Destroy headers_map (ONLY ONCE)
+    if(msg->headers_map){
+        printf("Destroying headers_map at: %p\n", (void*)msg->headers_map);
+        hashmap_destroy(msg->headers_map);  // Use your proper hashmap destructor
+        msg->headers_map = NULL;
+    }
+    
+    // Free the http_message struct itself
+    free(msg);
+    puts("HTTP MESSAGE OBJECT FREED SUCCESSFULLY!");
 }
-
 
 static void parse_header(char* header_line, hashmap_t* headers) {
     char key[256];
@@ -57,50 +78,84 @@ static void parse_header(char* header_line, hashmap_t* headers) {
 }
 
 http_message* init_httpMessage(){
-	http_request* request = malloc(sizeof(http_request));
-	if(request==NULL)return NULL;
-	http_message* httpMessage = malloc(sizeof(http_message));
-	if(httpMessage==NULL){
-		free(request);
-		return NULL;
-	}
-	httpMessage->body = NULL;
-	httpMessage->headers_map = NULL;
-	httpMessage->request = request;
-	return httpMessage;
+    http_request* request = malloc(sizeof(http_request));
+    if(request == NULL) return NULL;
+    
+    // CRITICAL: Initialize all fields to zero
+    memset(request, 0, sizeof(http_request));
+    
+    http_message* httpMessage = malloc(sizeof(http_message));
+    if(httpMessage == NULL){
+        free(request);
+        return NULL;
+    }
+    
+    // Initialize all fields to zero
+    memset(httpMessage, 0, sizeof(http_message));
+    httpMessage->request = request;
+    
+    return httpMessage;
 }
 
-http_message* parse_http_message(int socket,AppContext* ctx){
-	if(ctx==NULL)return NULL;
-	http_message* httpMessage = init_httpMessage();
-	hashmap_t* headers_map = hashmap_create();
-	if(headers_map==NULL){
-		 destroy_httpMessage(httpMessage);
-		 return NULL;
-	}
-	
-	char* first_line = read_until(socket, "\r\n");
-	sscanf(first_line, "%s %s %s", httpMessage->request->method,httpMessage->request->request_uri, httpMessage->request->http_version);
-
-
-	while (1) {
-		char* header_line = read_until(socket, "\r\n");
-		if (strlen(header_line) == 0) break; 
-		parse_header(header_line, headers_map);
-	}
-
-	httpMessage->headers_map = headers_map;
-
-	char* cl = (char*)hashmap_get(headers_map,"Content-Length");
-	if (cl!=NULL) {
-		int content_length = atoi(cl);
-		char* body_buffer = malloc(content_length + 1);
-		read_exact_bytes(socket, body_buffer, content_length);
-		httpMessage->body = body_buffer;
-	}
-	return httpMessage;
+http_message* parse_http_message(int socket, AppContext* ctx){
+    if(ctx == NULL) return NULL;
+    
+    http_message* httpMessage = init_httpMessage();
+    if(httpMessage == NULL) return NULL;
+    
+    hashmap_t* headers_map = hashmap_create();
+    if(headers_map == NULL){
+        destroy_httpMessage(httpMessage);
+        return NULL;
+    }
+    
+    char* first_line = read_until(socket, "\r\n");
+    if(!first_line) {
+        destroy_httpMessage(httpMessage);
+        hashmap_destroy(headers_map);
+        return NULL;
+    }
+    
+    // ALLOCATE memory for strings
+    char method[32], uri[1024], version[32];
+    sscanf(first_line, "%31s %1023s %31s", method, uri, version);
+    
+    // COPY strings into allocated memory
+     // COPY strings into allocated memory
+    httpMessage->request->method = my_strdup(method);
+    httpMessage->request->request_uri = my_strdup(uri); 
+    httpMessage->request->http_version = my_strdup(version);
+    free(first_line);  // Don't forget to free this!
+    
+    // Parse headers
+    while (1) {
+        char* header_line = read_until(socket, "\r\n");
+        if (!header_line || strlen(header_line) == 0) {
+            if(header_line) free(header_line);
+            break;
+        }
+        parse_header(header_line, headers_map);
+        free(header_line);  // Free the line after parsing
+    }
+    
+    httpMessage->headers_map = headers_map;
+    
+    // Parse body
+    char* cl = (char*)hashmap_get(headers_map, "Content-Length");
+    if (cl != NULL) {
+        int content_length = atoi(cl);
+        if(content_length > 0) {
+            char* body_buffer = malloc(content_length + 1);
+            if(body_buffer) {
+                read_exact_bytes(socket, body_buffer, content_length);
+                body_buffer[content_length] = '\0';
+                httpMessage->body = body_buffer;
+            }
+        }
+    }
+    
+    return httpMessage;
 }
-
 
 
 

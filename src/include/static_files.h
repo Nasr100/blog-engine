@@ -4,5 +4,5 @@
 
 #include "../include/app_context.h"
 void render_static_file(int socket,char* uri,AppContext* ctx);
-
+void serve_static_file(int socket, const char* filename, AppContext* ctx);
 #endif

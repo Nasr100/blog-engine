@@ -4,9 +4,9 @@
 #include "../../shared/utils/hashmap/hashmap.h"
 #include "types.h"
 typedef struct http_request{
-	char method[10];
-	char request_uri[1024];
-	char http_version[10];
+	char* method;
+	char* request_uri;
+	char* http_version;
 }http_request;
 
 typedef struct http_message{

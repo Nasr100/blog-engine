@@ -5,10 +5,7 @@
 #include "../../../shared/utils/helpers.h"
 #include "../../../shared/db/database.h"
 
-struct postService{
-    postRepo* postRepo;
-    tagRepo* tagRepo;
-};
+
 
 postService* postService_create(postRepo* postRepo,tagRepo* tagRepo){
     postService* ps = malloc(sizeof(postService));
@@ -20,14 +17,17 @@ postService* postService_create(postRepo* postRepo,tagRepo* tagRepo){
 }
 
 void postService_destroy(postService** ps_ptr){
-    if(*ps_ptr == NULL) return ;
+    if(ps_ptr == NULL || *ps_ptr == NULL) return;
+    
     postService* ps = *ps_ptr;
-    if(ps->postRepo) free(ps->postRepo);
+    
+    // 🎯 JUST SET TO NULL - DON'T FREE THE REPOSITORIES!
+    // They are shared with other services and managed by AppContext
     ps->postRepo = NULL;
-    if(ps->tagRepo) free(ps->tagRepo);
     ps->tagRepo = NULL;
+    
     free(ps);
-    ps = NULL;
+    *ps_ptr = NULL;
 }
 
 
@@ -83,14 +83,35 @@ repsonseMsg* postService_get_postById(postService* postService,int post_id){
 }
 
 repsonseMsg* postService_get_allPostsPreview(postService* postService){
-    if(postService == NULL) return NULL;
+    printf("postService_get_allPostsPreview called\n");
+    
+    if(postService == NULL) {
+        printf("postService is NULL\n");
+        return create_error_response("err", "{\"err\":\"Service not initialized\"}", 500);
+    }
+    
+    if(postService->postRepo == NULL) {
+        printf("postRepo is NULL\n");
+        return create_error_response("err", "{\"err\":\"Post repository not initialized\"}", 500);
+    }
+    
+    printf("Calling select_allPosts_preview...\n");
     dynamic_array* posts = select_allPosts_preview(postService->postRepo);
+    printf("select_allPosts_preview returned: %p\n", (void*)posts);
+    
     if(posts == NULL){
-        return create_error_response("err","SERVER ERROR",500);
+        printf("select_allPosts_preview returned NULL (this should not happen!)\n");
+        return create_error_response("err", "{\"err\":\"SERVER ERROR - Database error\"}", 500);
     }
-    for(int i = 0;i<posts->count;i++){
+    
+    printf("Repository returned array with %d posts\n", posts->count);
+    
+    for(int i = 0; i < posts->count; i++){
         post* p = (post*)posts->array[i];
-        p->tags = find_post_tags(postService->tagRepo,p->post_id);
+        printf("🔍 Getting tags for post %d...\n", p->post_id);
+        p->tags = find_post_tags(postService->tagRepo, p->post_id);
+        printf("✅ Post %d has tags: %p\n", p->post_id, (void*)p->tags);
     }
-    return create_success_response(posts,200);
+    
+    return create_success_response(posts, 200);
 }

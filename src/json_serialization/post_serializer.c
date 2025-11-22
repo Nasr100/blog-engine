@@ -14,7 +14,7 @@ cJSON* post_to_json(post* post) {
     cJSON_AddNumberToObject(json, "views", post->views);
     
     // Add user if available
-    if (post->user) {
+    if (post->user){
         cJSON* user_json = cJSON_CreateObject();
         cJSON_AddNumberToObject(user_json, "id", post->user->user_id);
         cJSON_AddStringToObject(user_json, "username", post->user->username);
@@ -23,7 +23,7 @@ cJSON* post_to_json(post* post) {
         cJSON_AddNumberToObject(json, "user_id", post->user_id);
     }
     
-    // Add tags array if available
+    // Add tags array 
     if (post->tags && post->tags->count > 0) {
         cJSON* tags_array = cJSON_CreateArray();
         for (size_t i = 0; i < post->tags->count; i++) {

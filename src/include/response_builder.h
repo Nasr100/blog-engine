@@ -14,7 +14,7 @@ typedef enum content_type_enum{
 	HTML,
 	CSS,
 	JS,
-	TEXT
+	UNKNOWN
 }content_type_enum;
 
 // void create_response(int code, content_type_enum content_type, int content_length, int socket) ;

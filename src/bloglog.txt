@@ -1,13 +1,317 @@
-[21-11-2025 20:15:16] INFO : App context initialized successfully!
-[21-11-2025 20:15:16] INFO : BINDING SUCCEED
-[21-11-2025 20:15:16] INFO : SERVER LISTENING ON PORT 0
-[21-11-2025 20:16:03] INFO : App context initialized successfully!
-[21-11-2025 20:16:03] INFO : BINDING SUCCEED
-[21-11-2025 20:16:03] INFO : SERVER LISTENING ON PORT 0
-[21-11-2025 20:23:26] INFO : App context initialized successfully!
-[21-11-2025 20:23:26] INFO : BINDING SUCCEED
-[21-11-2025 20:23:26] INFO : SERVER LISTENING ON PORT 8080
-[21-11-2025 20:23:36] INFO : socket 6 : http message parsed successfully!
-[21-11-2025 20:23:36] INFO : 404 PAGE was sent to socket 6 
-[21-11-2025 20:23:36] INFO : socket 6 : http message parsed successfully!
-[21-11-2025 20:23:36] INFO : 404 PAGE was sent to socket 6 
+[21-11-2025 20:50:44] INFO : App context initialized successfully!
+[21-11-2025 20:50:44] INFO : BINDING SUCCEED
+[21-11-2025 20:50:44] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 20:50:49] INFO : socket 8 : http message parsed successfully!
+[21-11-2025 20:50:49] INFO : 404 PAGE was sent to socket 8 
+[21-11-2025 20:52:20] INFO : App context initialized successfully!
+[21-11-2025 20:52:20] INFO : BINDING SUCCEED
+[21-11-2025 20:52:20] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 20:52:22] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 20:52:22] INFO : 404 PAGE was sent to socket 6 
+[21-11-2025 20:53:39] INFO : App context initialized successfully!
+[21-11-2025 20:53:39] INFO : BINDING SUCCEED
+[21-11-2025 20:53:39] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 20:53:41] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 20:53:41] INFO : 404 PAGE was sent to socket 6 
+[21-11-2025 20:54:17] INFO : App context initialized successfully!
+[21-11-2025 20:54:17] ERROR : Error Binding
+[21-11-2025 20:54:32] INFO : App context initialized successfully!
+[21-11-2025 20:54:32] ERROR : Error Binding
+[21-11-2025 20:54:38] INFO : App context initialized successfully!
+[21-11-2025 20:54:38] ERROR : Error Binding
+[21-11-2025 20:55:46] INFO : App context initialized successfully!
+[21-11-2025 20:55:46] INFO : BINDING SUCCEED
+[21-11-2025 20:55:46] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 20:55:57] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 20:55:57] INFO : 404 PAGE was sent to socket 6 
+[21-11-2025 20:56:36] INFO : App context initialized successfully!
+[21-11-2025 20:56:36] ERROR : Error Binding
+[21-11-2025 21:00:25] INFO : App context initialized successfully!
+[21-11-2025 21:00:25] INFO : BINDING SUCCEED
+[21-11-2025 21:00:25] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:00:29] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:00:29] INFO : 404 PAGE was sent to socket 6 
+[21-11-2025 21:07:04] INFO : App context initialized successfully!
+[21-11-2025 21:07:04] INFO : BINDING SUCCEED
+[21-11-2025 21:07:04] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:07:07] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:07:07] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:07:16] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:07:16] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:07:51] INFO : socket 7 : http message parsed successfully!
+[21-11-2025 21:07:51] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 7
+[21-11-2025 21:07:55] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:07:55] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:07:55] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:07:55] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:11:08] INFO : App context initialized successfully!
+[21-11-2025 21:11:08] INFO : BINDING SUCCEED
+[21-11-2025 21:11:08] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:11:12] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:11:12] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:12:00] INFO : App context initialized successfully!
+[21-11-2025 21:12:00] ERROR : Error Binding
+[21-11-2025 21:13:50] INFO : App context initialized successfully!
+[21-11-2025 21:13:50] INFO : BINDING SUCCEED
+[21-11-2025 21:13:50] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:13:54] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:13:54] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:16:35] INFO : App context initialized successfully!
+[21-11-2025 21:16:35] INFO : BINDING SUCCEED
+[21-11-2025 21:16:35] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:16:37] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:16:37] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:19:42] INFO : App context initialized successfully!
+[21-11-2025 21:19:42] INFO : BINDING SUCCEED
+[21-11-2025 21:19:42] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:19:44] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:19:44] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:45] INFO : App context initialized successfully!
+[21-11-2025 21:22:45] INFO : BINDING SUCCEED
+[21-11-2025 21:22:45] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:22:48] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:48] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:55] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:55] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:55] INFO : socket 7 : http message parsed successfully!
+[21-11-2025 21:22:55] INFO : 404 PAGE was sent to socket 7
+[21-11-2025 21:22:55] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:55] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:56] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:56] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:56] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:56] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:56] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:56] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:22:57] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:22:57] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:23:00] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:23:00] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:23:01] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:23:01] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:23:01] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:23:01] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:23:01] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:23:01] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:24:53] INFO : App context initialized successfully!
+[21-11-2025 21:24:53] INFO : BINDING SUCCEED
+[21-11-2025 21:24:53] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:24:56] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:24:56] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:25:09] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:25:09] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:25:37] INFO : App context initialized successfully!
+[21-11-2025 21:25:37] ERROR : Error Binding
+[21-11-2025 21:33:49] INFO : App context initialized successfully!
+[21-11-2025 21:33:49] INFO : BINDING SUCCEED
+[21-11-2025 21:33:49] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:33:52] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:33:52] INFO : 404 PAGE was sent to socket 6
+[21-11-2025 21:39:53] INFO : App context initialized successfully!
+[21-11-2025 21:39:53] INFO : BINDING SUCCEED
+[21-11-2025 21:39:53] INFO : SERVER LISTENING ON PORT 8080
+[21-11-2025 21:39:55] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:39:55] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:39:55] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:39:55] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[21-11-2025 21:39:56] INFO : socket 6 : http message parsed successfully!
+[21-11-2025 21:39:56] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:16:59] INFO : App context initialized successfully!
+[22-11-2025 19:16:59] INFO : BINDING SUCCEED
+[22-11-2025 19:16:59] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:17:07] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:17:07] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:17:07] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:17:07] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:17:07] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:17:07] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:17:08] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:17:08] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:17:14] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:17:14] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:18:30] INFO : App context initialized successfully!
+[22-11-2025 19:18:30] INFO : BINDING SUCCEED
+[22-11-2025 19:18:30] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:18:34] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:18:34] INFO : 404 PAGE was sent to socket 6 
+[22-11-2025 19:24:17] INFO : App context initialized successfully!
+[22-11-2025 19:24:17] INFO : BINDING SUCCEED
+[22-11-2025 19:24:17] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:24:22] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:24:22] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:24:33] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:24:33] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:26:49] INFO : App context initialized successfully!
+[22-11-2025 19:26:49] ERROR : Error Binding
+[22-11-2025 19:26:55] INFO : App context initialized successfully!
+[22-11-2025 19:26:55] ERROR : Error Binding
+[22-11-2025 19:27:26] INFO : App context initialized successfully!
+[22-11-2025 19:27:26] ERROR : Error Binding
+[22-11-2025 19:31:04] INFO : App context initialized successfully!
+[22-11-2025 19:31:04] INFO : BINDING SUCCEED
+[22-11-2025 19:31:04] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:31:08] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:31:08] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:32:34] INFO : App context initialized successfully!
+[22-11-2025 19:32:34] ERROR : Error Binding
+[22-11-2025 19:33:55] INFO : App context initialized successfully!
+[22-11-2025 19:33:55] INFO : BINDING SUCCEED
+[22-11-2025 19:33:55] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:33:59] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:33:59] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:34:36] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:34:36] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:39:39] INFO : App context initialized successfully!
+[22-11-2025 19:39:39] INFO : BINDING SUCCEED
+[22-11-2025 19:39:39] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:39:43] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:43] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:39:43] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:43] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:39:52] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:52] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:39:53] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:53] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:39:53] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:53] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[22-11-2025 19:39:53] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:53] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:39:59] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:59] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:39:59] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:39:59] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:40:18] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:40:18] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:40:18] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:40:18] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:57:04] INFO : App context initialized successfully!
+[22-11-2025 19:57:04] INFO : BINDING SUCCEED
+[22-11-2025 19:57:04] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:57:21] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:57:21] INFO : 404 PAGE was sent to socket 6 
+[22-11-2025 19:57:21] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:57:21] INFO : Static file 'posts.html' sent to socket 6
+[22-11-2025 19:59:31] INFO : App context initialized successfully!
+[22-11-2025 19:59:31] INFO : BINDING SUCCEED
+[22-11-2025 19:59:31] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 19:59:35] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:59:35] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 19:59:35] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 19:59:35] INFO : 404 PAGE was sent to socket 6 
+[22-11-2025 20:00:58] INFO : App context initialized successfully!
+[22-11-2025 20:00:58] ERROR : Error Binding
+[22-11-2025 20:02:04] INFO : App context initialized successfully!
+[22-11-2025 20:02:04] INFO : BINDING SUCCEED
+[22-11-2025 20:02:04] INFO : SERVER LISTENING ON PORT 8080
+[22-11-2025 20:02:07] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:02:07] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:02:07] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 20:11:42] INFO : App context initialized successfully!
+[22-11-2025 20:11:42] ERROR : Error Binding
+[22-11-2025 20:12:40] INFO : App context initialized successfully!
+[22-11-2025 20:12:40] ERROR : Error Binding
+[22-11-2025 20:14:12] INFO : App context initialized successfully!
+[22-11-2025 20:14:12] ERROR : Error Binding
+[22-11-2025 20:19:21] INFO : App context initialized successfully!
+[22-11-2025 20:19:21] ERROR : Error Binding
+[22-11-2025 20:19:58] INFO : App context initialized successfully!
+[22-11-2025 20:19:58] ERROR : Error Binding
+[22-11-2025 20:21:50] INFO : App context initialized successfully!
+[22-11-2025 20:21:50] ERROR : Error Binding
+[22-11-2025 20:23:05] INFO : App context initialized successfully!
+[22-11-2025 20:23:05] ERROR : Error Binding
+[22-11-2025 20:26:26] INFO : App context initialized successfully!
+[22-11-2025 20:26:26] ERROR : Error Binding
+[22-11-2025 20:27:54] INFO : App context initialized successfully!
+[22-11-2025 20:27:54] ERROR : Error Binding
+[22-11-2025 20:28:59] INFO : App context initialized successfully!
+[22-11-2025 20:28:59] INFO : BINDING SUCCEED
+[22-11-2025 20:28:59] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:29:06] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:29:06] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 20:29:06] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:29:06] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 20:32:41] INFO : App context initialized successfully!
+[22-11-2025 20:32:41] INFO : BINDING SUCCEED
+[22-11-2025 20:32:41] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:32:44] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:32:44] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 20:33:32] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:33:32] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 20:33:53] ERROR : socket 7 : http message parsed FAILED!
+[22-11-2025 20:33:56] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:33:56] INFO : 404 PAGE was sent to socket 6
+[22-11-2025 20:35:57] INFO : App context initialized successfully!
+[22-11-2025 20:35:57] INFO : BINDING SUCCEED
+[22-11-2025 20:35:57] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:36:00] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:37:02] ERROR : socket 6 : http message parsed FAILED!
+[22-11-2025 20:37:02] ERROR : socket 7 : http message parsed FAILED!
+[22-11-2025 20:42:11] INFO : App context initialized successfully!
+[22-11-2025 20:42:11] INFO : BINDING SUCCEED
+[22-11-2025 20:42:11] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:42:14] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:44:19] INFO : App context initialized successfully!
+[22-11-2025 20:44:19] INFO : BINDING SUCCEED
+[22-11-2025 20:44:19] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:44:22] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:46:51] INFO : App context initialized successfully!
+[22-11-2025 20:46:51] INFO : BINDING SUCCEED
+[22-11-2025 20:46:51] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:46:53] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:49:04] INFO : App context initialized successfully!
+[22-11-2025 20:49:04] INFO : BINDING SUCCEED
+[22-11-2025 20:49:04] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:49:07] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:50:31] INFO : App context initialized successfully!
+[22-11-2025 20:50:31] INFO : BINDING SUCCEED
+[22-11-2025 20:50:31] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:50:34] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 20:53:04] INFO : App context initialized successfully!
+[22-11-2025 20:53:04] INFO : BINDING SUCCEED
+[22-11-2025 20:53:04] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 20:53:19] INFO : socket 7 : http message parsed successfully!
+[22-11-2025 21:00:59] INFO : App context initialized successfully!
+[22-11-2025 21:00:59] INFO : BINDING SUCCEED
+[22-11-2025 21:00:59] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:01:03] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 21:03:09] INFO : App context initialized successfully!
+[22-11-2025 21:03:09] INFO : BINDING SUCCEED
+[22-11-2025 21:03:09] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:03:13] INFO : socket 7 : http message parsed successfully!
+[22-11-2025 21:04:16] INFO : App context initialized successfully!
+[22-11-2025 21:04:16] ERROR : Error Binding
+[22-11-2025 21:07:18] INFO : App context initialized successfully!
+[22-11-2025 21:07:18] INFO : BINDING SUCCEED
+[22-11-2025 21:07:18] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:07:30] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 21:12:25] INFO : App context initialized successfully!
+[22-11-2025 21:12:25] INFO : BINDING SUCCEED
+[22-11-2025 21:12:25] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:12:29] INFO : socket 7 : http message parsed successfully!
+[22-11-2025 21:13:31] ERROR : socket 6 : http message parsed FAILED!
+[22-11-2025 21:13:31] ERROR : socket 7 : http message parsed FAILED!
+[22-11-2025 21:14:30] INFO : App context initialized successfully!
+[22-11-2025 21:14:30] INFO : BINDING SUCCEED
+[22-11-2025 21:14:30] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:14:33] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 21:15:46] ERROR : socket 7 : http message parsed FAILED!
+[22-11-2025 21:15:46] ERROR : socket 6 : http message parsed FAILED!
+[22-11-2025 21:20:33] INFO : App context initialized successfully!
+[22-11-2025 21:20:33] INFO : BINDING SUCCEED
+[22-11-2025 21:20:33] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:20:36] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 21:21:50] ERROR : socket 6 : http message parsed FAILED!
+[22-11-2025 21:21:50] ERROR : socket 7 : http message parsed FAILED!
+[22-11-2025 21:26:50] INFO : App context initialized successfully!
+[22-11-2025 21:26:50] INFO : BINDING SUCCEED
+[22-11-2025 21:26:50] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:26:52] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 21:28:18] INFO : App context initialized successfully!
+[22-11-2025 21:28:18] INFO : BINDING SUCCEED
+[22-11-2025 21:28:18] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:28:22] INFO : socket 6 : http message parsed successfully!
+[22-11-2025 21:32:01] INFO : App context initialized successfully!
+[22-11-2025 21:32:01] INFO : BINDING SUCCEED
+[22-11-2025 21:32:01] INFO : SERVER LISTENING ON PORT 8081
+[22-11-2025 21:32:04] INFO : socket 6 : http message parsed successfully!

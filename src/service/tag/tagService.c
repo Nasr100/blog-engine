@@ -25,12 +25,24 @@ repsonseMsg* tagService_add_tag(tagService* tagService,tagCreateDto* new_tag){
 }
 
 void tagService_destroy(tagService** ts_ptr){
-    if (!ts_ptr || !*ts_ptr) return;
+    printf("🚨 tagService_destroy called for: %p\n", (void*)*ts_ptr);
+    if(ts_ptr == NULL || *ts_ptr == NULL) {
+        printf("🚨 tagService_destroy: NULL pointer, returning early\n");
+        return;
+    }
+    
     tagService* ts = *ts_ptr;
-    if(ts->tagRepo)free(ts->tagRepo);
-    ts->tagRepo=NULL;
+    
+    printf("🔧 tagService_destroy - tagRepo: %p\n", (void*)ts->tagRepo);
+    printf("🔧 tagService contents - tagRepo address: %p\n", (void*)ts->tagRepo);
+    
+    // DON'T free the tagRepo here - let app_context handle it
+    // Just set to NULL
+    ts->tagRepo = NULL;
+    
+    printf("🗑️  Freeing tagService struct at: %p\n", (void*)ts);
     free(ts);
-    ts = NULL;
+    *ts_ptr = NULL;
+    printf("✅ tagService_destroy completed\n");
 }
-
 

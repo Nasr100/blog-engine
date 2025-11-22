@@ -13,7 +13,6 @@ char* get_content_type(content_type_enum type) {
         case HTML: return "text/html; charset=UTF-8";
         case CSS: return "text/css";
         case JS: return "text/javascript";
-        case TEXT: return "text/plain";
         default: return "application/octet-stream";
     }
 }

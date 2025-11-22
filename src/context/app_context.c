@@ -44,51 +44,89 @@ AppContext* app_context_init(AppContext* ctx) {
     }
     
     //init  routers
-    ctx->api_router = create_router();
+    ctx->api_router = NULL;
      
-    if (!ctx->api_router) {
-        log_error(ctx->logger, "Failed to create api router");
-        return NULL;
-    }
-    routes_api_init(ctx->api_router);
-
-
-
-    
-
-
-    //init repositories
-    postRepo* postRepo = create_post_repo(ctx->database);
+ postRepo* postRepo = create_post_repo(ctx->database);
+    printf("🔍 Created postRepo: %p\n", (void*)postRepo);
     if(postRepo == NULL) return NULL;
+    
     tagRepo* tagRepo = create_tagRepo(ctx->database);
+    printf("🔍 Created tagRepo: %p\n", (void*)tagRepo);
     if(tagRepo == NULL) return NULL;
 
     //init services
-    ctx->postService = postService_create(postRepo,tagRepo);
+    ctx->postService = postService_create(postRepo, tagRepo);
+    printf("🔍 Created postService: %p\n", (void*)ctx->postService);
+    printf("🔍 postService->postRepo: %p\n", (void*)ctx->postService->postRepo);
+    printf("🔍 postService->tagRepo: %p\n", (void*)ctx->postService->tagRepo);
     if(ctx->postService == NULL) return NULL;
 
-    ctx->tagService = tagService_create(tagRepo);
-    if(ctx->tagService == NULL) return NULL;
+    // ctx->tagService = tagService_create(tagRepo);
+    // printf("🔍 Created tagService: %p\n", (void*)ctx->tagService);
+    // printf("🔍 tagService->tagRepo: %p\n", (void*)ctx->tagService->tagRepo);
+    // if(ctx->tagService == NULL) return NULL;
+    ctx->tagService = NULL;
     log_info(ctx->logger, "App context initialized successfully!");
     return ctx;
 }
 
 void app_context_destroy(AppContext* ctx) {
-    if (!ctx) return;
+    printf("🚨 app_context_destroy called for: %p\n", (void*)ctx);
+    if (!ctx) {
+        printf("🚨 ctx is NULL, returning early\n");
+        return;
+    }
     
-    if (ctx->api_router) destroy_router((ctx->api_router)); 
-    ctx->api_router = NULL;
+    printf("🔧 Destroying services...\n");
+    if(ctx->postService){
+        printf("🗑️  Destroying postService at: %p\n", (void*)ctx->postService);
+        postService_destroy(&(ctx->postService));
+        ctx->postService = NULL;
+        printf("✅ postService destroyed\n");
+    }
+    
+    if(ctx->tagService){
+        printf("🗑️  Destroying tagService at: %p\n", (void*)ctx->tagService);
+        tagService_destroy(&(ctx->tagService));
+        ctx->tagService = NULL;
+        printf("✅ tagService destroyed\n");
+    }
+    
+    // printf("🔧 Destroying router...\n");
+    // if (ctx->api_router){
+    //     printf("🗑️  Destroying router at: %p\n", (void*)ctx->api_router);
+    //     destroy_router(ctx->api_router); 
+    //     ctx->api_router = NULL;
+    //     printf("✅ router destroyed\n");
+    // }
 
-    if (ctx->database) database_close(ctx->database);
-    ctx->database= NULL;
-    if (ctx->logger) destroy_logger(ctx->logger);
-    ctx->logger = NULL;
-    if (ctx->config) config_free(ctx->config);
-    ctx->config = NULL;
-    //vaalid free
-    if(ctx->postService) postService_destroy(&(ctx->postService));
-    if(ctx->tagService) tagService_destroy(&(ctx->tagService));
+    printf("🔧 Closing database...\n");
+    if (ctx->database){
+        printf("🗑️  Closing database at: %p\n", (void*)ctx->database);
+        database_close(ctx->database);
+        ctx->database = NULL;
+        printf("✅ database closed\n");
+    }
+    
+    printf("🔧 Destroying logger...\n");
+    if (ctx->logger){
+        printf("🗑️  Destroying logger at: %p\n", (void*)ctx->logger);
+        destroy_logger(ctx->logger);
+        ctx->logger = NULL;
+        printf("✅ logger destroyed\n");
+    }
+    
+    printf("🔧 Freeing config...\n");
+    if (ctx->config){
+        printf("🗑️  Freeing config at: %p\n", (void*)ctx->config);
+        config_free(ctx->config);
+        ctx->config = NULL;
+        printf("✅ config freed\n");
+    }
+    
+    printf("🔧 Freeing AppContext struct...\n");
     free(ctx);
+    printf("✅ AppContext freed - DESTRUCTION COMPLETE\n");
 }
 
 logger_t* app_context_get_logger(AppContext* ctx) {

@@ -6,6 +6,7 @@
 #include "../../include/post_serializer.h"
 #include "../../include/response_builder.h"
 #include "../../include/request_parser.h"
+
 int postController_get_postbyId(int socket, http_message* message,AppContext* ctx){
     char* str_id = get_last_uri(message->request->request_uri);
     int id = atoi(str_id);
@@ -28,23 +29,47 @@ int postController_get_postbyId(int socket, http_message* message,AppContext* ct
     return 0;
 }
 
-int postController_get_AllpostsPreview(int socket, http_message* message,AppContext* ctx){
+int postController_get_AllpostsPreview(int socket, http_message* message, AppContext* ctx){
     (void)message;
+    puts("IM ENTERING GET POSTS API..");
     repsonseMsg* rm = postService_get_allPostsPreview(ctx->postService);
+    
     if(rm->data == NULL){
         send_json_response(socket, rm->err_msg, rm->code_status);
+        destroy_responseMsg(rm);
         return -1;
     }
+    
     dynamic_array* posts = (dynamic_array*)rm->data;
-    char* json_str = posts_to_json_string(posts);
+    
+    // 🎯 Create proper JSON structure
+    cJSON* root = cJSON_CreateObject();
+    cJSON* posts_array = cJSON_CreateArray();
+    
+    // // Add each post to the array
+    for(int i = 0; i < posts->count; i++){
+        post* p = posts->array[i];
+        cJSON* post_json = post_to_json(p);
+        cJSON_AddItemToArray(posts_array, post_json);
+    }
+    
+    // // 🎯 Add the array to the root object
+    cJSON_AddItemToObject(root, "posts", posts_array);
+    cJSON_AddNumberToObject(root, "count", posts->count);
+    
+    char* json_str = cJSON_Print(root);
+    
     send_json_response(socket, json_str, 200);
+    
+    // Cleanup
     free(json_str);
-    for(int i=0;i<posts->count;i++){
+    cJSON_Delete(root);
+    
+    for(int i = 0; i < posts->count; i++){
         post* p = posts->array[i];
         destroy_post(p);
     }
     dynamic_array_destroy(posts);
     destroy_responseMsg(rm);
-    rm = NULL;
     return 0;
 }
