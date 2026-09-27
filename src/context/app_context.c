@@ -43,7 +43,7 @@ AppContext* app_context_init(AppContext* ctx) {
         return NULL;
     }
     
-    //init  routers
+    //init  router
     ctx->api_router = NULL;
      
  postRepo* postRepo = create_post_repo(ctx->database);

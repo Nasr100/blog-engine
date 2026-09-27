@@ -21,7 +21,7 @@ void postService_destroy(postService** ps_ptr){
     
     postService* ps = *ps_ptr;
     
-    // 🎯 JUST SET TO NULL - DON'T FREE THE REPOSITORIES!
+    // JUST SET TO NULL - DON'T FREE THE REPOSITORIES!
     // They are shared with other services and managed by AppContext
     ps->postRepo = NULL;
     ps->tagRepo = NULL;

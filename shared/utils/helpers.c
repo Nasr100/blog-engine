@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "helpers.h"
-
+#include <ctype.h>
 char* my_strdup(char* str) {
     if (str == NULL) return NULL;
     size_t len = strlen(str) + 1;
@@ -145,10 +145,10 @@ int is_api(char* uri){
     return 0; 
 }
 
-char* get_afterLastDelimiter(const char *filename,char delimiter) {
+char* get_afterLastDelimiter(const char *filename, char delimiter) {
     const char *dot = strrchr(filename, delimiter); 
     if (!dot || dot == filename) { 
-        return ""; 
+        return my_strdup("");  
     }
-    return (char *)(dot + 1);
+    return my_strdup(dot + 1);  
 }

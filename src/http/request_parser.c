@@ -121,7 +121,6 @@ http_message* parse_http_message(int socket, AppContext* ctx){
     sscanf(first_line, "%31s %1023s %31s", method, uri, version);
     
     // COPY strings into allocated memory
-     // COPY strings into allocated memory
     httpMessage->request->method = my_strdup(method);
     httpMessage->request->request_uri = my_strdup(uri); 
     httpMessage->request->http_version = my_strdup(version);

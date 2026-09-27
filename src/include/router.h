@@ -3,7 +3,7 @@
 #define ROUTER_H
 #include "types.h"
 #include "../../shared/utils/hashmap/hashmap.h" 
-#include <regex.h>
+// #include <regex.h>
 typedef void (*route_handler_t)(int socket, http_message* message, AppContext* ctx);
 
 typedef struct entryRoute{

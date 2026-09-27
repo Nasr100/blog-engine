@@ -52,21 +52,21 @@ server* create_server(int port,char* servername,int max_clients){
     memset(s, 0, sizeof(server));
     s->server_socket = socketFd;
     
-    // 🎯 CREATE CONTEXT
+    //CREATE CONTEXT
     s->ctx = app_context_create();
     printf("APP CONTEXT CREATED at address: %p\n", s->ctx);
     
     if(s->ctx == NULL){
-        printf("❌ Failed to create app context\n");
+        printf("Failed to create app context\n");
         close(s->server_socket);
         free(s);
         return NULL;
     }
     
-    // 🎯 INITIALIZE CONTEXT - don't overwrite the pointer!
+    // INITIALIZE CONTEXT - don't overwrite the pointer!
     if(app_context_init(s->ctx) == NULL){
-        printf("❌ Failed to initialize app context\n");
-        app_context_destroy(s->ctx);  // 🎯 CLEAN UP the created context!
+        printf("Failed to initialize app context\n");
+        app_context_destroy(s->ctx);  // CLEAN UP the created context!
         close(s->server_socket);
         free(s);
         return NULL;
@@ -88,7 +88,7 @@ server* create_server(int port,char* servername,int max_clients){
     
     s->port = port;
     if(bind_socket(s) != 0){
-        printf("❌ Failed to bind socket\n");
+        printf("Failed to bind socket\n");
         app_context_destroy(s->ctx);
         close(s->server_socket);
         free(s);
@@ -100,7 +100,7 @@ server* create_server(int port,char* servername,int max_clients){
     s->name = my_strdup(servername);
     s->master = malloc(sizeof(fd_set));
     if (!s->master) {
-        printf("❌ Failed to allocate fd_set\n");
+        printf("Failed to allocate fd_set\n");
         app_context_destroy(s->ctx);
         close(s->server_socket);
         free(s->name);
@@ -206,63 +206,63 @@ void server_loop(server* server){
 
 // }
 void destroy_server(server* srv) {
-    printf("🚨 ===== DESTROY_SERVER START =====\n");
-    printf("🚨 destroy_server called for: %p\n", (void*)srv);
+    printf("===== DESTROY_SERVER START =====\n");
+    printf("destroy_server called for: %p\n", (void*)srv);
     
     if (!srv) {
-        printf("🚨 destroy_server: NULL server pointer\n");
+        printf("destroy_server: NULL server pointer\n");
         return;
     }
     
     // Print all server fields for debugging
-    printf("🔧 Server contents:\n");
-    printf("🔧   name: %p -> '%s'\n", (void*)srv->name, srv->name ? srv->name : "NULL");
-    printf("🔧   server_socket: %d\n", srv->server_socket);
-    printf("🔧   master: %p\n", (void*)srv->master);
-    printf("🔧   port: %d\n", srv->port);
-    printf("🔧   max_clients: %d\n", srv->max_clients);
-    printf("🔧   is_running: %d\n", srv->is_running);
-    printf("🔧   ctx: %p\n", (void*)srv->ctx);
+    printf("Server contents:\n");
+    printf("name: %p -> '%s'\n", (void*)srv->name, srv->name ? srv->name : "NULL");
+    printf("server_socket: %d\n", srv->server_socket);
+    printf("master: %p\n", (void*)srv->master);
+    printf("port: %d\n", srv->port);
+    printf("max_clients: %d\n", srv->max_clients);
+    printf("is_running: %d\n", srv->is_running);
+    printf("ctx: %p\n", (void*)srv->ctx);
     
     printf("🔧 Freeing fd_set master...\n");
     if (srv->master) {
         free(srv->master);
         srv->master = NULL;
-        printf("✅ fd_set master freed\n");
+        printf("fd_set master freed\n");
     } else {
-        printf("✅ fd_set master was NULL\n");
+        printf("fd_set master was NULL\n");
     }
     
     printf("🔧 Closing server socket...\n");
     if (srv->server_socket > 0) {
         close(srv->server_socket);
         srv->server_socket = -1;
-        printf("✅ Server socket closed\n");
+        printf("Server socket closed\n");
     } else {
-        printf("✅ Server socket was invalid: %d\n", srv->server_socket);
+        printf("Server socket was invalid: %d\n", srv->server_socket);
     }
     
-    printf("🔧 Destroying app context...\n");
+    printf("Destroying app context...\n");
     if (srv->ctx) {
         app_context_destroy(srv->ctx);
         srv->ctx = NULL;
-        printf("✅ App context destroyed\n");
+        printf("App context destroyed\n");
     } else {
-        printf("✅ App context was NULL\n");
+        printf("App context was NULL\n");
     }
     
-    printf("🔧 Freeing server name...\n");
+    printf("Freeing server name...\n");
     if (srv->name) {
         free(srv->name);
         srv->name = NULL;
-        printf("✅ Server name freed\n");
+        printf("Server name freed\n");
     } else {
-        printf("✅ Server name was NULL\n");
+        printf("Server name was NULL\n");
     }
     
-    printf("🔧 Freeing server struct at: %p\n", (void*)srv);
+    printf("Freeing server struct at: %p\n", (void*)srv);
     free(srv);
-    printf("✅ Server struct freed\n");
+    printf("Server struct freed\n");
     
-    printf("🚨 ===== DESTROY_SERVER COMPLETE =====\n");
+    printf("===== DESTROY_SERVER COMPLETE =====\n");
 }

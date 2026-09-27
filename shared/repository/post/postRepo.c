@@ -48,32 +48,69 @@ post* insert_post(postRepo* postRepo,post* new_post){
 }
 
 dynamic_array* select_allPosts_preview(postRepo* postRepo){
-    sqlite3_stmt *res;
-    dynamic_array* posts_array = NULL;
-     char* sql = "SELECT posts.post_id,posts.title,posts.slug,posts.author,posts.date,posts.likes,posts.views,users.user_id,users.username,users.is_admin FROM posts  INNER JOIN users ON  users.user_id = posts.FK_posts_users where posts.status=\"publish\" AND posts.is_deleted = 0 AND users.is_deleted=0 ORDER BY posts.date DESC;";
-     int rc = sqlite3_prepare_v2(postRepo->database->db, sql, -1, &res, 0);
-    if (rc != SQLITE_OK){
-        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(postRepo->database->db));
+    printf("select_allPosts_preview called\n");
+    
+    if (!postRepo || !postRepo->database || !postRepo->database->db) {
+        printf("Database or repository is NULL\n");
         return NULL;
     }
-    if(sqlite3_step(res)== SQLITE_ROW){
-            int post_id = sqlite3_column_int(res, 0);
-	        const unsigned char *title = sqlite3_column_text(res, 1);
-	        const unsigned char *slug = sqlite3_column_text(res, 2);
-	        const unsigned char *author = sqlite3_column_text(res, 3);
-	        const unsigned char *date = sqlite3_column_text(res, 4);
-	        int likes = sqlite3_column_int(res,5);
-	        int views = sqlite3_column_int(res,6);
-	        int user_id = sqlite3_column_int(res,7);
-	        const unsigned char *username = sqlite3_column_text(res, 8);
-            int is_admin = sqlite3_column_int(res,9);
-            user* u = create_user(user_id,NULL,NULL,NULL,NULL,username,-1,' ',0,is_admin);
-            post* p = create_post(post_id,title,slug,NULL,author,date,"publish",likes,views,0,user_id,u,NULL);
-            dynamic_array_push_elem(posts_array,p);
+
+    sqlite3_stmt *res;
+    dynamic_array* posts_array = dynamic_array_create();
+    if (!posts_array) {
+        printf("Failed to create dynamic array\n");
+        return NULL;
     }
+    printf("Created empty posts array: %p\n", (void*)posts_array);
+    
+    char* sql = "SELECT posts.post_id,posts.title,posts.slug,posts.author,posts.date,posts.likes,posts.views,users.user_id,users.username,users.is_admin FROM posts  INNER JOIN users ON  users.user_id = posts.FK_posts_users where posts.status=\"publish\" AND posts.is_deleted = 0 AND users.is_deleted=0 ORDER BY posts.date DESC;";
+    
+    printf("🔍 Executing SQL: %s\n", sql);
+    
+    int rc = sqlite3_prepare_v2(postRepo->database->db, sql, -1, &res, 0);
+    if (rc != SQLITE_OK){
+        printf("Failed to prepare statement: %s\n", sqlite3_errmsg(postRepo->database->db));
+        dynamic_array_destroy(posts_array);  // Clean up on error
+        return NULL;
+    }
+    printf("SQL statement prepared successfully\n");
+
+    int row_count = 0;
+    printf("🔍 Stepping through results...\n");
+    
+    while(sqlite3_step(res) == SQLITE_ROW){
+        row_count++;
+        printf("Processing row %d\n", row_count);
+        
+        int post_id = sqlite3_column_int(res, 0);
+        const unsigned char *title = sqlite3_column_text(res, 1);
+        const unsigned char *slug = sqlite3_column_text(res, 2);
+        const unsigned char *author = sqlite3_column_text(res, 3);
+        const unsigned char *date = sqlite3_column_text(res, 4);
+        int likes = sqlite3_column_int(res,5);
+        int views = sqlite3_column_int(res,6);
+        int user_id = sqlite3_column_int(res,7);
+        const unsigned char *username = sqlite3_column_text(res, 8);
+        int is_admin = sqlite3_column_int(res,9);
+        
+        printf("Row data - ID: %d, Title: %s\n", post_id, title ? (char*)title : "NULL");
+        
+        user* u = create_user(user_id,NULL,NULL,NULL,NULL,username,-1,' ',0,is_admin);
+        post* p = create_post(post_id,title,slug,NULL,author,date,"publish",likes,views,0,user_id,u,NULL);
+        
+        if (p) {
+            dynamic_array_push_elem(posts_array, p);
+            printf("Added post to array\n");
+        }
+    }
+
+    sqlite3_finalize(res);
+    
+    printf("Finished processing. Total rows: %d, Posts in array: %d\n", row_count, posts_array->count);
+    printf("Returning posts array: %p with %d posts\n", (void*)posts_array, posts_array->count);
+    
     return posts_array;
 }
-
 
 post* select_PostById(postRepo* postRepo,int post_id){
     sqlite3_stmt *res;

@@ -315,3 +315,21 @@
 [22-11-2025 21:32:01] INFO : BINDING SUCCEED
 [22-11-2025 21:32:01] INFO : SERVER LISTENING ON PORT 8081
 [22-11-2025 21:32:04] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:28:56] INFO : App context initialized successfully!
+[25-09-2026 23:28:56] INFO : BINDING SUCCEED
+[25-09-2026 23:28:56] INFO : SERVER LISTENING ON PORT 8081
+[25-09-2026 23:29:18] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:29:18] INFO : Static file 'home.html' sent to socket 6
+[25-09-2026 23:29:18] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:29:18] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[25-09-2026 23:29:18] INFO : socket 7 : http message parsed successfully!
+[25-09-2026 23:29:18] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 7
+[25-09-2026 23:29:19] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:29:19] INFO : 404 PAGE was sent to socket 6
+[25-09-2026 23:31:26] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:31:26] INFO : Static file 'home.html' sent to socket 6
+[25-09-2026 23:31:26] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:31:26] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[25-09-2026 23:31:26] INFO : socket 6 : http message parsed successfully!
+[25-09-2026 23:31:26] INFO : STATIC FILE SENT SUCCESSFULLY TO SOCKET: 6
+[25-09-2026 23:31:41] INFO : socket 6 : http message parsed successfully!

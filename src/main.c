@@ -14,7 +14,7 @@ int main(){
 	printf("MAIN STARTED\n");
     
     server* server = create_server(PORT,"blogServer",20);
-    if (!server) {
+    if (!server){
         printf("Failed to create server\n");
         return 1;
     }

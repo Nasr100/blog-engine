@@ -33,16 +33,18 @@ router* create_router(){
 
 
 
-
 void match_route(http_message* message,int socket,AppContext* ctx){
 	// route_handler_t handler = NULL;
 	  printf("🎯 match_route called\n");
     printf("🎯 URI: '%s'\n", message->request->request_uri);
     printf("🎯 Method: '%s'\n", message->request->method);
     printf("🎯 URI length: %zu\n", strlen(message->request->request_uri));
-
+	// 
+	// need to create routes hashmap so when i have a new route add it directly to hashmap and create a match function 
+	// 
 	if(strncmp(message->request->request_uri, "/api", 4)==0){
 		 printf("🚀 API route detected\n");
+		 //i assumed its get protocole
 		if (strcmp(message->request->request_uri, "/api/posts") == 0) {
 			printf("✅ Matched /api/posts route\n");
         		postController_get_AllpostsPreview(socket, message, ctx);
@@ -57,7 +59,7 @@ void match_route(http_message* message,int socket,AppContext* ctx){
 			}
 			
 	}else{
-		 printf("📁 Static file route detected\n");
+		 printf("Static file route detected\n");
 			if (strcmp(message->request->request_uri, "/") == 0 || strcmp(message->request->request_uri, "/home") == 0) {
 				printf("Serving home page\n");
 				serve_static_file(socket, "home.html", ctx);
