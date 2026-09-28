@@ -44,7 +44,14 @@ AppContext* app_context_init(AppContext* ctx) {
     }
     
     //init  router
+    puts("router init start");
     ctx->api_router = NULL;
+    ctx->api_router =  create_router();
+    puts("router created");
+    //add routres to api router
+    puts("routes init started");
+    routes_api_init(ctx->api_router);
+     puts("routes init finished");
      
  postRepo* postRepo = create_post_repo(ctx->database);
     printf("🔍 Created postRepo: %p\n", (void*)postRepo);
@@ -92,13 +99,13 @@ void app_context_destroy(AppContext* ctx) {
         printf("✅ tagService destroyed\n");
     }
     
-    // printf("🔧 Destroying router...\n");
-    // if (ctx->api_router){
-    //     printf("🗑️  Destroying router at: %p\n", (void*)ctx->api_router);
-    //     destroy_router(ctx->api_router); 
-    //     ctx->api_router = NULL;
-    //     printf("✅ router destroyed\n");
-    // }
+    printf("🔧 Destroying router...\n");
+    if (ctx->api_router){
+        printf("🗑️  Destroying router at: %p\n", (void*)ctx->api_router);
+        destroy_router(ctx->api_router); 
+        ctx->api_router = NULL;
+        printf("✅ router destroyed\n");
+    }
 
     printf("🔧 Closing database...\n");
     if (ctx->database){
@@ -136,3 +143,5 @@ logger_t* app_context_get_logger(AppContext* ctx) {
 router* app_context_get_router(AppContext* ctx) {
     return ctx->api_router;
 }
+
+
