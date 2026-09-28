@@ -4,7 +4,7 @@
 #include "post.h"
 
 
-post* create_post(size_t id,char* title,char*slug,char* body,char* author,char* date,char* status,size_t likes, size_t views,int is_deleted,int user_id,user* user,dynamic_array* tags){
+post* create_post(size_t id,char* title,char*slug,char* path,char* author,char* date,char* status,size_t likes, size_t views,int is_deleted,int user_id,user* user,dynamic_array* tags){
     post* p = malloc(sizeof(post));
     if(p==NULL){
         return NULL;
@@ -21,7 +21,7 @@ post* create_post(size_t id,char* title,char*slug,char* body,char* author,char* 
     p->tags = tags;
     p->title= my_strdup(title);
     p->slug= my_strdup(slug);
-    p->body = my_strdup(body);
+    p->path = my_strdup(path);
     p->author = my_strdup(author);
     p->date = my_strdup(date);
     p->status = my_strdup(status);
@@ -35,8 +35,8 @@ void destroy_post(post* post){
     post->author =NULL;
     if(post->title)free(post->title);
     post->title =NULL;
-    if(post->body)free(post->body);
-    post->body =NULL;
+    if(post->path)free(post->path);
+    post->path =NULL;
     if(post->date)free(post->date);
     post->date =NULL;
     if(post->slug)free(post->slug);

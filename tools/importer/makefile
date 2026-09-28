@@ -10,7 +10,7 @@ SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(SRCS:.c=.o)
 
 # Target executable
-TARGET = importer_tool
+TARGET = importer
 
 .PHONY: all clean
 

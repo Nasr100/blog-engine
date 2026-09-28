@@ -15,7 +15,7 @@ typedef struct post{
     size_t post_id;
     char* title;
     char* slug;
-    char* body;
+    char* path;
     char* author;
     char* date;
     char* status;
@@ -28,7 +28,7 @@ typedef struct post{
     dynamic_array* tags;
 }post;
 
-post* create_post(size_t id,char* title,char*slug,char* body,char* author,char* date,char* status,size_t likes, size_t views,int is_deleted,int user_id,user* user,dynamic_array* tags);
+post* create_post(size_t id,char* title,char*slug,char* path,char* author,char* date,char* status,size_t likes, size_t views,int is_deleted,int user_id,user* user,dynamic_array* tags);
 
 void destroy_post(post* post);
 

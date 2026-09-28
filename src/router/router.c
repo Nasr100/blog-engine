@@ -147,7 +147,8 @@ void routes_api_init(router* router){
     puts("adding routes");
     add_route(router,"GET","^/api/posts$",&postController_get_AllpostsPreview); // /api/posts
     puts("route adeed");
-    add_route(router,"GET","^/api/posts/([^/]+)",&postController_get_postbyId); // /api/posts/id
+    add_route(router,"GET","^/api/posts/([^/]+)",&get_postbyId_json); // /api/posts/id
+    add_route(router,"GET","^/posts/([^/]+)",&get_postbyId_html);
     }
 
     void destroy_router(router* router){

@@ -7,13 +7,13 @@
 #define MAX_TAGS 5
 
 
-void split_tags_array(char* line,char* tags[]){
+int split_tags_array(char* line,char* tags[]){
 	char* copy_line = line;
 	char* token = strtok(copy_line,":");
 	token = strtok(NULL,":");
 
 	char* copy_token = token;
-	char* tag = strtok(copy_token+2,",");
+	char* tag = strtok(copy_token+1,",");
 	int tag_counter = 0;
 	while(tag!=NULL && tag_counter<=MAX_TAGS){
 		tags[tag_counter] = malloc(sizeof(char)*strlen(tag)+1);
@@ -26,6 +26,7 @@ void split_tags_array(char* line,char* tags[]){
 		tag = strtok(NULL,",");
 		tag_counter++;
 	}
+	return tag_counter;
 }
 
 

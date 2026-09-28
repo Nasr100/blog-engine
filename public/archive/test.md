@@ -1,8 +1,8 @@
 status:F
-title:micorservices test
+title:micorservicestest
 date:10/24/2025
-tags: [Microservices,Web,Api]
-author: Benkhali Nasrallah
+tags:[Microservices,Web,Api]
+author:Benkhali Nasrallah
 -----------------------------HEADER-------------------------------
 ## **1. Core Concepts of Microservices**  
 **What to Learn:**  

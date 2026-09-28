@@ -46,7 +46,7 @@ int add_tagToPost(post_tagRepo* post_tagRepo,int post_id,int tag_id){
          return -1;    	
 	}
     sqlite3_finalize(res);
-    database_commit(post_tagRepo->database);
+    // database_commit(post_tagRepo->database);
     if (post_tagRepo->database->err_msg) {
         fprintf(stderr, "Transaction error: %s\n", post_tagRepo->database->err_msg);
         sqlite3_free(post_tagRepo->database->err_msg);

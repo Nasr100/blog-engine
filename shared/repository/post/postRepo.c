@@ -15,12 +15,12 @@ postRepo* create_post_repo(database* database){
 
 post* insert_post(postRepo* postRepo,post* new_post){
     sqlite3_stmt *res;
-	char* sql = "INSERT INTO posts (title,slug,body,author,date,status) VALUES(?,?,?,?,?,?);";
+	char* sql = "INSERT INTO posts (title,slug,path,author,date,status) VALUES(?,?,?,?,?,?);";
     int rc = sqlite3_prepare_v2(postRepo->database->db, sql, -1, &res, 0);
     if (rc == SQLITE_OK) {
 	    sqlite3_bind_text(res, 1,new_post->title,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_text(res, 2,new_post->slug,-1,SQLITE_TRANSIENT);	
-	    sqlite3_bind_text(res, 3,new_post->body,-1,SQLITE_TRANSIENT);	
+	    sqlite3_bind_text(res, 3,new_post->path,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_text(res, 4,new_post->author,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_text(res, 5,new_post->date,-1,SQLITE_TRANSIENT);	
 	    sqlite3_bind_text(res, 6,new_post->status,-1,SQLITE_TRANSIENT);	
@@ -33,7 +33,8 @@ post* insert_post(postRepo* postRepo,post* new_post){
             new_post->post_id = new_post_id;
 	    }
 	}else {
-	    fprintf(stderr, "Failed to execute insert tag statement: %s\n", sqlite3_errmsg(postRepo->database->db));
+        puts("aint np way");
+	    fprintf(stderr, "Failed to execute insert post statement: %s\n", sqlite3_errmsg(postRepo->database->db));
 	    sqlite3_finalize(res);
          return NULL;
 	        	
@@ -115,7 +116,7 @@ dynamic_array* select_allPosts_preview(postRepo* postRepo){
 post* select_PostById(postRepo* postRepo,int post_id){
     sqlite3_stmt *res;
     post* p = NULL;
-    char* sql = "SELECT posts.post_id,posts.title,posts.slug,posts.body,posts.author,posts.date,posts.likes,posts.views,users.user_id,users.username,users.is_admin FROM posts INNER JOIN users ON  users.user_id = posts.FK_posts_users where posts.post_id = ? AND posts.status=\"publish\" AND posts.is_deleted = 0 AND users.is_deleted=0 ORDER BY posts.date DESC;";
+    char* sql = "SELECT posts.post_id,posts.title,posts.slug,posts.path,posts.author,posts.date,posts.likes,posts.views,users.user_id,users.username,users.is_admin FROM posts INNER JOIN users ON  users.user_id = posts.FK_posts_users where posts.post_id = ? AND posts.status=\"publish\" AND posts.is_deleted = 0 AND users.is_deleted=0 ORDER BY posts.date DESC;";
     int rc = sqlite3_prepare_v2(postRepo->database->db, sql, -1, &res, 0);
     if (rc != SQLITE_OK){
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(postRepo->database->db));
@@ -126,7 +127,7 @@ post* select_PostById(postRepo* postRepo,int post_id){
             int post_id = sqlite3_column_int(res, 0);
 	        const unsigned char *title = sqlite3_column_text(res, 1);
 	        const unsigned char *slug = sqlite3_column_text(res, 2);
-	        const unsigned char *body = sqlite3_column_text(res, 3);
+	        const unsigned char *path = sqlite3_column_text(res, 3);
 	        const unsigned char *author = sqlite3_column_text(res, 4);
 	        const unsigned char *date = sqlite3_column_text(res, 5);
 	        int likes = sqlite3_column_int(res, 6);
@@ -137,7 +138,7 @@ post* select_PostById(postRepo* postRepo,int post_id){
             int is_admin = sqlite3_column_int(res, 10);
 
             user* u = create_user(user_id,NULL,NULL,NULL,NULL,username,-1,' ',0,is_admin);
-            p = create_post(post_id,title,slug,body,author,date,"publish",likes,views,0,user_id,u,NULL);
+            p = create_post(post_id,title,slug,path,author,date,"publish",likes,views,0,user_id,u,NULL);
     }
     return p;
 }

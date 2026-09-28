@@ -7,7 +7,7 @@
 #include "../../include/response_builder.h"
 #include "../../include/request_parser.h"
 
-int postController_get_postbyId(int socket, http_message* message,AppContext* ctx){
+int get_postbyId_json(int socket, http_message* message,AppContext* ctx){
     char* str_id = get_last_uri(message->request->request_uri);
     int id = atoi(str_id);
     if(id == 0){
@@ -28,7 +28,23 @@ int postController_get_postbyId(int socket, http_message* message,AppContext* ct
     destroy_responseMsg(rm);
     return 0;
 }
+int get_postbyId_html(int socket,http_message* message,AppContext* ctx){
+     char* str_id = get_last_uri(message->request->request_uri);
+    int id = atoi(str_id);
+    if(id == 0){
+        //send 404 page
 
+        // send_json_response(socket, "{\"error\":\"post id need to be an integer\"}", 400);
+        return -1;
+    }
+    repsonseMsg* rm = postService_get_postById(ctx->postService,id);
+    
+    if(rm->data == NULL){
+        //send 404 page
+    }
+    post* p = rm->data;
+    //convert to html
+}
 int postController_get_AllpostsPreview(int socket, http_message* message, AppContext* ctx){
     (void)message;
     puts("IM ENTERING GET POSTS API..");

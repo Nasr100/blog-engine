@@ -18,9 +18,6 @@ typedef struct entryRoute{
 typedef struct router{
 	dynamic_array* routes;
 	// hashmap_t* get_routes;
-	// hashmap_t* post_routes;
-	// hashmap_t* put_routes;
-	// hashmap_t* delete_routes;
 }router;
 
 void add_route(router* router,char* method,char* pattern,route_handler_t handler);
