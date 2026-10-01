@@ -83,5 +83,25 @@ int delete_tagFromPost(post_tagRepo* post_tagRepo,int post_id,int tag_id){
     return 1;
 }
 
-
+dynamic_array* get_post_tags(post_tagRepo* post_tagRepo,int post_id){
+      if(post_tagRepo == NULL) return -1;
+      sqlite3_stmt *res;
+    char* sql = "SELECT tags.tag_id,tags.name FROM posts,tags INNER JOIN tags_post ON tags_post.FK_posts_tags = ? WHERE tags.is_deleted = 0";
+     int rc = sqlite3_prepare_v2(post_tagRepo->database->db, sql, -1, &res, 0);
+     if (rc != SQLITE_OK){
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(post_tagRepo->database->db));
+        return NULL;
+    }
+      sqlite3_bind_int(res, 1,post_id);
+      dynamic_array* tags = dynamic_array_create();
+      while(sqlite3_step(res)== SQLITE_ROW){
+        int tag_id = sqlite3_column_int(res,0);
+        const unsigned char *name = sqlite3_column_text(res,1);
+        tag* t = create_tag(tag_id,name,0);
+        if(t) dynamic_array_push_elem(tags,t);
+      }
+      sqlite3_finalize(res);
+      puts("tags selected succefully for a post");
+      return tags;
+}
 

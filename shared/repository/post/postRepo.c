@@ -64,7 +64,7 @@ dynamic_array* select_allPosts_preview(postRepo* postRepo){
     }
     printf("Created empty posts array: %p\n", (void*)posts_array);
     
-    char* sql = "SELECT posts.post_id,posts.title,posts.slug,posts.author,posts.date,posts.likes,posts.views,users.user_id,users.username,users.is_admin FROM posts  INNER JOIN users ON  users.user_id = posts.FK_posts_users where posts.status=\"publish\" AND posts.is_deleted = 0 AND users.is_deleted=0 ORDER BY posts.date DESC;";
+    char* sql = "SELECT posts.post_id,posts.title,posts.slug,posts.author,posts.date,posts.likes,posts.views FROM posts where posts.status='publish' AND posts.is_deleted = 0 ORDER BY posts.date DESC;";
     
     printf("🔍 Executing SQL: %s\n", sql);
     
@@ -91,12 +91,14 @@ dynamic_array* select_allPosts_preview(postRepo* postRepo){
         int likes = sqlite3_column_int(res,5);
         int views = sqlite3_column_int(res,6);
         int user_id = sqlite3_column_int(res,7);
-        const unsigned char *username = sqlite3_column_text(res, 8);
-        int is_admin = sqlite3_column_int(res,9);
+        // const unsigned char *username = sqlite3_column_text(res, 8);
+        // int is_admin = sqlite3_column_int(res,9);
         
         printf("Row data - ID: %d, Title: %s\n", post_id, title ? (char*)title : "NULL");
         
-        user* u = create_user(user_id,NULL,NULL,NULL,NULL,username,-1,' ',0,is_admin);
+        // user* u = create_user(user_id,NULL,NULL,NULL,NULL,username,-1,' ',0,is_admin);
+                user* u = NULL;
+
         post* p = create_post(post_id,title,slug,NULL,author,date,"publish",likes,views,0,user_id,u,NULL);
         
         if (p) {

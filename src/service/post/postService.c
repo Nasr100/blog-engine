@@ -7,11 +7,12 @@
 
 
 
-postService* postService_create(postRepo* postRepo,tagRepo* tagRepo){
+postService* postService_create(postRepo* postRepo,tagRepo* tagRepo,post_tagRepo* post_tagRepo){
     postService* ps = malloc(sizeof(postService));
     if(ps==NULL) return NULL;
     ps->postRepo = postRepo;
     ps->tagRepo = tagRepo;
+    ps->post_tagRepo = post_tagRepo;
     return ps;
 
 }
@@ -25,6 +26,7 @@ void postService_destroy(postService** ps_ptr){
     // They are shared with other services and managed by AppContext
     ps->postRepo = NULL;
     ps->tagRepo = NULL;
+    ps->post_tagRepo = NULL;
     
     free(ps);
     *ps_ptr = NULL;
@@ -55,7 +57,7 @@ repsonseMsg* postService_add_post(postService* postService,postCreateDto* new_po
         dynamic_array_push_elem(p->tags,t);
     }
     database_commit(postService->postRepo->database);
-        return create_success_response(p,201);
+        return create_response(1,"",p,201);
     }
     return create_error_response("err","post not added succefully",500);
 }
@@ -65,21 +67,22 @@ repsonseMsg* postService_delete_post(postService* postService,int post_id){
     post* p = select_PostById(postService->postRepo,post_id);
     if(p!=NULL){
         if(remove_post(postService->postRepo,post_id) ==-1){
-            return create_error_response("err","failed to delete post",500);
+            return create_response(0,"failed to delete post",500,NULL);
         }
-        return create_success_response(p,200);
+        return create_esponse(1," post deleted succefully",203,NULL);
     }
-    return create_error_response("err","post not found",400);
+    return create_response(0,"post not found",400,NULL);
 }
 
 repsonseMsg* postService_get_postById(postService* postService,int post_id){
     if(postService == NULL) return NULL;
     post* p = select_PostById(postService->postRepo,post_id);
     if(p==NULL){
-        return create_error_response("err","post not found",404);
+        return create_response(0,"Post not found",500,NULL);
     };
-    p->tags = find_post_tags(postService->tagRepo,post_id);
-    return create_success_response(p,200);
+    p->tags = get_post_tags(postService->tagRepo,post_id);
+   
+    return create_response(1,"post retrieved succefully",200,p);
 }
 
 repsonseMsg* postService_get_allPostsPreview(postService* postService){
@@ -87,12 +90,12 @@ repsonseMsg* postService_get_allPostsPreview(postService* postService){
     
     if(postService == NULL) {
         printf("postService is NULL\n");
-        return create_error_response("err", "{\"err\":\"Service not initialized\"}", 500);
+        return create_response(0,"post service not initialized",500,NULL);
     }
     
-    if(postService->postRepo == NULL) {
+    if(postService->postRepo == NULL || postService->post_tagRepo == NULL) {
         printf("postRepo is NULL\n");
-        return create_error_response("err", "{\"err\":\"Post repository not initialized\"}", 500);
+        return create_response(0,"repos not initialized",500,NULL);
     }
     
     printf("Calling select_allPosts_preview...\n");
@@ -101,17 +104,23 @@ repsonseMsg* postService_get_allPostsPreview(postService* postService){
     
     if(posts == NULL){
         printf("select_allPosts_preview returned NULL (this should not happen!)\n");
-        return create_error_response("err", "{\"err\":\"SERVER ERROR - Database error\"}", 500);
+        return create_response(0,"databse error",500,NULL);
     }
     
     printf("Repository returned array with %d posts\n", posts->count);
-    
-    for(int i = 0; i < posts->count; i++){
-        post* p = (post*)posts->array[i];
-        printf("🔍 Getting tags for post %d...\n", p->post_id);
-        p->tags = find_post_tags(postService->tagRepo, p->post_id);
-        printf("✅ Post %d has tags: %p\n", p->post_id, (void*)p->tags);
+    if(posts->count>0){
+        for(int i = 0; i < posts->count; i++){
+            post* p = (post*)posts->array[i];
+            printf("🔍 Getting tags for post %d...\n", p->post_id);
+            p->tags = get_post_tags(postService->post_tagRepo, p->post_id);
+            if(p->tags==NULL){
+            return create_response(0,"databse error",500,NULL);
+            }
+            printf("✅ Post %d has tags: %p\n", p->post_id, (void*)p->tags);
+        }
     }
-    
-    return create_success_response(posts, 200);
+    return create_response(1,"posts retrieved successfully",200,posts);
 }
+
+
+

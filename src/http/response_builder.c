@@ -7,12 +7,15 @@
 #include <stdlib.h>                    // Add for free()
 #include <string.h>                    // Add for strlen()
 #include "../../shared/utils/helpers.h"
+
 char* get_content_type(content_type_enum type) {
     switch(type){
         case IMAGE: return "image/jpeg";
         case HTML: return "text/html; charset=UTF-8";
         case CSS: return "text/css";
         case JS: return "text/javascript";
+        case TEXT : return "text/plain";
+        case JSON : return "application/json";
         default: return "application/octet-stream";
     }
 }
@@ -27,52 +30,9 @@ char* get_status_line(int code) {
     }
 }
 
-// void create_response(int code, content_type_enum content_type, int content_length, int socket) {
-//     char* status_line = get_status_line(code);
-//     char* content_type_str = get_content_type(content_type);
-//     char response_buffer[8192];
-//     memset(response_buffer,0,sizeof(response_buffer));
-    
-//     long unsigned int written = snprintf(response_buffer, sizeof(response_buffer),
-//                          "%s\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",
-//                          status_line, content_type_str, content_length);
-    
-//     if (written > 0 && written < sizeof(response_buffer)) {
-//         send(socket, response_buffer, written, 0);
-//     }
-    
-// }
-
-// void send_404_page( int socket){
-// 	char* file = file_read("/mnt/c/Users/nasr0/OneDrive/Desktop/2026 C BOOTCAMP/BLOG ENGINE/public/template/html/404.html");
-// 	create_response(404, HTML, strlen(file),socket);
-// 	send(socket, file, strlen(file), 0);
-// }
 
 
-void send_json_response(int client_fd, const char* json_data, int status_code) {
-    char response[4096];
-    
-    // Build HTTP response
-    int length = snprintf(response, sizeof(response),
-        "HTTP/1.1 %d %s\r\n"
-        "Content-Type: application/json\r\n"
-        "Content-Length: %zu\r\n"
-        "Connection: close\r\n"
-        "\r\n"
-        "%s",
-        status_code, get_status_text(status_code),
-        strlen(json_data),
-        json_data);
-    
-    send(client_fd, response, length, 0);
-}
 
-void send_json_response_from_cjson(int client_fd, cJSON* json, int status_code) {
-    char* json_str = cJSON_Print(json);
-    send_json_response(client_fd, json_str, status_code);
-    free(json_str);
-}
 
 // Helper to get status text
 const char* get_status_text(int status_code) {
@@ -99,8 +59,51 @@ void send_error_response(int client_fd, dynamic_array* error_messages, int statu
     cJSON_AddItemToObject(error_json, "errors", errors_array);
     cJSON_AddNumberToObject(error_json, "status", status_code);
     
-    send_json_response_from_cjson(client_fd, error_json, status_code);
+    // send_json_response_from_cjson(client_fd, error_json, status_code);
     cJSON_Delete(error_json);
 }
+
+
+
+ssize_t send_response(int code, content_type_enum content_type, size_t content_length,int socket,char* res_body){
+    char* status_line = get_status_line(code);
+    char* content_type_str = get_content_type(content_type);
+
+    int header_length = snprintf(
+        NULL,
+        0,
+        "%s\r\n"
+        "Content-Type: %s\r\n"
+        "Content-Length: %zu\r\n"
+        "Connection: close\r\n"
+        "\r\n",
+        status_line,
+        content_type_str,
+        content_length
+    );
+
+    char header[header_length + 1];
+
+    snprintf(
+        header,
+        sizeof(header),
+        "%s\r\n"
+        "Content-Type: %s\r\n"
+        "Content-Length: %zu\r\n"
+        "Connection: close\r\n"
+        "\r\n",
+        status_line,
+        content_type_str,
+        content_length
+    );
+
+    ssize_t sent = send(socket, header, header_length, 0);
+
+    if (sent < 0)
+        return sent;
+
+    return send(socket, res_body, content_length, 0);
+}
+
 
 

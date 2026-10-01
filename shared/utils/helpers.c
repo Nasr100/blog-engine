@@ -31,39 +31,37 @@ char* slug_converter(const char* title){
 }
 
 
-repsonseMsg* create_success_response(void* data,int code_status){
+// repsonseMsg* create_success_response(void* data,int code_status){
+//     repsonseMsg* res = malloc(sizeof(repsonseMsg));
+//     if(res==NULL) return NULL;
+//     res->data = data;
+//     res->err_msg= NULL;
+//     res->errMsgtype = NULL;
+//     res->code_status = code_status;
+//     return res;
+// }
+
+repsonseMsg* create_response(int success, char* message, int code_status,void* data){
     repsonseMsg* res = malloc(sizeof(repsonseMsg));
     if(res==NULL) return NULL;
     res->data = data;
-    res->err_msg= NULL;
-    res->errMsgtype = NULL;
+    res->success= success;
+    res->msg = my_strdup(message);
     res->code_status = code_status;
     return res;
 }
-
-repsonseMsg* create_error_response(char* msgType, char* messages, int code_status){
+repsonseMsg* create_multiError_response(int success, dynamic_array* messages, int code_status){
     repsonseMsg* res = malloc(sizeof(repsonseMsg));
     if(res==NULL) return NULL;
     res->data = NULL;
-    res->err_msg= my_strdup(messages);
-    res->errMsgtype = my_strdup(msgType);
-    res->code_status = code_status;
-    return res;
-}
-repsonseMsg* create_multiError_response(char* msgType, dynamic_array* messages, int code_status){
-    repsonseMsg* res = malloc(sizeof(repsonseMsg));
-    if(res==NULL) return NULL;
-    res->data = NULL;
-    res->err_msg= messages;
-    res->errMsgtype = my_strdup(msgType);
+    res->msg= messages;
+    res->success = success;
     res->code_status = code_status;
     return res;
 }
 
 void destroy_responseMsg(repsonseMsg* res){
     if(res == NULL)return ;
-    if(res->errMsgtype)free(res->errMsgtype);
-    res->errMsgtype = NULL;
     free(res);
 }
 

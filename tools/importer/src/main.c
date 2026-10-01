@@ -71,6 +71,7 @@ int main(int argc, char *argv[]) {
             char* date;
              char* author;
             int tags_count;
+            char newfilepath[4096];
             while (fgets(line, sizeof(line), fptr) != NULL) {
                 line[strcspn(line, "\n")] = 0;
                 
@@ -120,8 +121,12 @@ int main(int argc, char *argv[]) {
             }
             puts("METADATA CAPTURED SUCCESSFULLY");
 		    if (article_valid){
-		        char* path = strdup(filepath);
-		        
+		        // 
+		         if (snprintf(newfilepath, sizeof(newfilepath), "%s/%s", blogConfig->blogs_archive, entry->d_name) >= sizeof(newfilepath)) {
+                    fprintf(stderr, "Path too long: %s/%s\n", blogConfig->blogs_archive, entry->d_name);
+                    continue;
+                }
+                char* path = strdup(newfilepath);
                 char slug[strlen(title)+1];
                 slug_converterv2(title,slug);
                 puts(title);
@@ -150,11 +155,11 @@ int main(int argc, char *argv[]) {
 		
             }
             fclose(fptr);
-            char newfilepath[4096];
-            if (snprintf(newfilepath, sizeof(newfilepath), "%s/%s", blogConfig->blogs_archive, entry->d_name) >= sizeof(newfilepath)) {
-                fprintf(stderr, "Path too long: %s/%s\n", blogConfig->blogs_archive, entry->d_name);
-                continue;
-            }
+            
+            // if (snprintf(newfilepath, sizeof(newfilepath), "%s/%s", blogConfig->blogs_archive, entry->d_name) >= sizeof(newfilepath)) {
+            //     fprintf(stderr, "Path too long: %s/%s\n", blogConfig->blogs_archive, entry->d_name);
+            //     continue;
+            // }
 
             if (rename(filepath, newfilepath) == 0) {
                 printf("File '%s' successfully moved to '%s'.\n", entry->d_name, newfilepath);

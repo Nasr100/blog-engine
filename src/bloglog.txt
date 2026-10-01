@@ -352,3 +352,159 @@
 [28-09-2026 14:57:15] INFO : BINDING SUCCEED
 [28-09-2026 14:57:15] INFO : SERVER LISTENING ON PORT 8081
 [28-09-2026 14:57:18] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:49:07] INFO : App context initialized successfully!
+[01-10-2026 19:49:07] INFO : BINDING SUCCEED
+[01-10-2026 19:49:07] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 19:49:13] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:49:13] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:54:27] INFO : App context initialized successfully!
+[01-10-2026 19:54:27] INFO : BINDING SUCCEED
+[01-10-2026 19:54:27] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 19:54:31] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:54:31] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:56:46] INFO : App context initialized successfully!
+[01-10-2026 19:56:46] INFO : BINDING SUCCEED
+[01-10-2026 19:56:46] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 19:56:49] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:56:49] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:59:17] INFO : App context initialized successfully!
+[01-10-2026 19:59:17] INFO : BINDING SUCCEED
+[01-10-2026 19:59:17] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 19:59:21] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 19:59:21] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:02:30] INFO : App context initialized successfully!
+[01-10-2026 20:02:30] INFO : BINDING SUCCEED
+[01-10-2026 20:02:30] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:02:33] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:02:33] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:03:42] INFO : App context initialized successfully!
+[01-10-2026 20:03:42] INFO : BINDING SUCCEED
+[01-10-2026 20:03:42] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:03:46] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:03:46] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:07:21] INFO : App context initialized successfully!
+[01-10-2026 20:07:21] INFO : BINDING SUCCEED
+[01-10-2026 20:07:21] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:07:24] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:07:24] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:13:49] INFO : App context initialized successfully!
+[01-10-2026 20:13:49] INFO : BINDING SUCCEED
+[01-10-2026 20:13:49] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:13:53] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:13:53] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:17:30] INFO : App context initialized successfully!
+[01-10-2026 20:17:30] INFO : BINDING SUCCEED
+[01-10-2026 20:17:30] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:17:34] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:17:34] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:20:23] INFO : App context initialized successfully!
+[01-10-2026 20:20:23] INFO : BINDING SUCCEED
+[01-10-2026 20:20:23] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:20:27] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:20:27] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:23:38] INFO : App context initialized successfully!
+[01-10-2026 20:23:38] INFO : BINDING SUCCEED
+[01-10-2026 20:23:38] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:23:42] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:23:42] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:23:42] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:23:42] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:35:41] INFO : App context initialized successfully!
+[01-10-2026 20:35:41] INFO : BINDING SUCCEED
+[01-10-2026 20:35:41] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:35:45] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:35:46] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:39:48] INFO : App context initialized successfully!
+[01-10-2026 20:39:48] INFO : BINDING SUCCEED
+[01-10-2026 20:39:48] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:39:51] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:39:51] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:39:51] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:42:18] INFO : App context initialized successfully!
+[01-10-2026 20:42:18] INFO : BINDING SUCCEED
+[01-10-2026 20:42:18] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:42:22] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:42:22] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:42:22] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:45:42] INFO : App context initialized successfully!
+[01-10-2026 20:45:42] INFO : BINDING SUCCEED
+[01-10-2026 20:45:42] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:45:45] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:45:45] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:45:45] INFO : socket 8 : http message parsed successfully!
+[01-10-2026 20:46:50] INFO : App context initialized successfully!
+[01-10-2026 20:46:50] INFO : BINDING SUCCEED
+[01-10-2026 20:46:50] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:46:53] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:46:53] INFO : socket 8 : http message parsed successfully!
+[01-10-2026 20:46:53] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:58:11] INFO : App context initialized successfully!
+[01-10-2026 20:58:11] INFO : BINDING SUCCEED
+[01-10-2026 20:58:11] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 20:58:14] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:58:14] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:58:14] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:59:09] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:59:09] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 20:59:09] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:00:26] INFO : App context initialized successfully!
+[01-10-2026 21:00:26] INFO : BINDING SUCCEED
+[01-10-2026 21:00:26] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:00:28] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:00:28] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:00:28] INFO : socket 8 : http message parsed successfully!
+[01-10-2026 21:03:20] INFO : App context initialized successfully!
+[01-10-2026 21:03:20] INFO : BINDING SUCCEED
+[01-10-2026 21:03:20] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:03:23] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:03:23] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:03:23] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:15:39] INFO : App context initialized successfully!
+[01-10-2026 21:15:39] INFO : BINDING SUCCEED
+[01-10-2026 21:15:39] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:15:43] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:22:42] INFO : App context initialized successfully!
+[01-10-2026 21:22:42] INFO : BINDING SUCCEED
+[01-10-2026 21:22:42] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:22:45] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:23:00] INFO : App context initialized successfully!
+[01-10-2026 21:23:00] INFO : BINDING SUCCEED
+[01-10-2026 21:23:00] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:23:03] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:24:01] INFO : App context initialized successfully!
+[01-10-2026 21:24:01] INFO : BINDING SUCCEED
+[01-10-2026 21:24:01] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:24:03] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:26:47] INFO : App context initialized successfully!
+[01-10-2026 21:26:47] INFO : BINDING SUCCEED
+[01-10-2026 21:26:47] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:26:49] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:27:31] INFO : App context initialized successfully!
+[01-10-2026 21:27:31] INFO : BINDING SUCCEED
+[01-10-2026 21:27:31] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:27:37] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:28:02] INFO : App context initialized successfully!
+[01-10-2026 21:28:02] INFO : BINDING SUCCEED
+[01-10-2026 21:28:02] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:28:05] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:28:05] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:28:05] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:28:24] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:28:25] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:28:30] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:29:00] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:30:00] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:32:53] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:33:21] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:34:23] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:34:25] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:34:30] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:34:33] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:35:03] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:38:13] INFO : App context initialized successfully!
+[01-10-2026 21:38:13] INFO : BINDING SUCCEED
+[01-10-2026 21:38:13] INFO : SERVER LISTENING ON PORT 8081
+[01-10-2026 21:38:26] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:38:26] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:38:40] INFO : socket 6 : http message parsed successfully!
+[01-10-2026 21:38:40] INFO : socket 6 : http message parsed successfully!

@@ -1,12 +1,14 @@
-#include "../../include/post_serializer.h"
+
 #include <stdlib.h>  // for malloc, free
 #include <string.h>
+#include "../include/post_serializer.h"
+
 cJSON* post_to_json(post* post) {
     cJSON* json = cJSON_CreateObject();
     cJSON_AddNumberToObject(json, "id", post->post_id);
     cJSON_AddStringToObject(json, "title", post->title);
     cJSON_AddStringToObject(json, "slug", post->slug);
-    cJSON_AddStringToObject(json, "body", post->body);
+    cJSON_AddStringToObject(json, "path", post->path);
     cJSON_AddStringToObject(json, "author", post->author);
     cJSON_AddStringToObject(json, "date", post->date);
     cJSON_AddStringToObject(json, "status", post->status);
@@ -56,7 +58,7 @@ post* json_to_post(cJSON* json) {
     post->post_id = cJSON_GetObjectItem(json, "id")->valueint;
     post->title = strdup(cJSON_GetObjectItem(json, "title")->valuestring);
     post->slug = strdup(cJSON_GetObjectItem(json, "slug")->valuestring);
-    post->body = strdup(cJSON_GetObjectItem(json, "body")->valuestring);
+    post->path = strdup(cJSON_GetObjectItem(json, "path")->valuestring);
     post->author = strdup(cJSON_GetObjectItem(json, "author")->valuestring);
     post->date = strdup(cJSON_GetObjectItem(json, "date")->valuestring);
     post->status = strdup(cJSON_GetObjectItem(json, "status")->valuestring);

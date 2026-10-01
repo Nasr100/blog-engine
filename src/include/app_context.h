@@ -13,8 +13,8 @@ typedef struct router router;
 typedef struct AppContext{
     logger_t* logger;
     database* database;
-    router* api_router;
-    postService* postService;        
+    router* router;
+    postService* postService;       
     tagService* tagService;        
     BlogConfig* config;
 }AppContext;

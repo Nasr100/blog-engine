@@ -13,17 +13,18 @@ typedef struct entryRoute{
 	regex_t* reg;
 	char* method;
 	// dynamic_array* params;
-	// int is_dynamic;
+	int is_dynamic;
 }entryRoute;
 typedef struct router{
-	dynamic_array* routes;
-	// hashmap_t* get_routes;
+	dynamic_array* dynamic_routes;
+	hashmap_t* static_routes;
 }router;
 
-void add_route(router* router,char* method,char* pattern,route_handler_t handler);
+void add_dynamic_route(router* router,char* method,char* pattern,route_handler_t handler);
+void add_static_route(router* router,char* method,char* uri,route_handler_t handler);
 void match_route(http_message* message,int socket,AppContext* ctx);
 router* create_router();
-void routes_api_init(router* router);
+void routes_init(router* router);
 void destroy_router(router* router);
 
 #endif

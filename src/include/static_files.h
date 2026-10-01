@@ -3,6 +3,8 @@
 #define  STATIC_FILES_H
 
 #include "../include/app_context.h"
-void render_static_file(int socket,char* uri,AppContext* ctx);
-void serve_static_file(int socket, const char* filename, AppContext* ctx);
+
+void render_static_file(int socket,http_message* message,AppContext* ctx);
+char* get_home_header_html(const char* title);
+char* get_home_footer_html();
 #endif

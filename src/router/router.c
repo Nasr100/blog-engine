@@ -8,7 +8,7 @@
 #include "../include/static_files.h"
 #include "../../shared/utils/helpers.h"
 #include "../controller/post/postController.h"
-
+#include "../controller/home/homeController.h"
 // char* create_route_key(const char* method, const char* path) {
 //     size_t len = strlen(method) + strlen(path) + 2;
 //     char* key = malloc(len);
@@ -23,84 +23,82 @@
 router* create_router(){
 	router* r = malloc(sizeof(router));
 	if(r == NULL) return NULL;
-    r->routes = dynamic_array_create();
+    r->dynamic_routes = dynamic_array_create();
+    r->static_routes = hashmap_create();
     return r;
 }
 
 
 
 
-// void match_route(http_message* message,int socket,AppContext* ctx){
-// 	// route_handler_t handler = NULL;
-// 	  printf("🎯 match_route called\n");
-//     printf("🎯 URI: '%s'\n", message->request->request_uri);
-//     printf("🎯 Method: '%s'\n", message->request->method);
-//     printf("🎯 URI length: %zu\n", strlen(message->request->request_uri));
-// 	// 
-// 	// 
 
-// 	if(strncmp(message->request->request_uri, "/api", 4)==0){
-// 		hashmap_get(ctx->api_router->get_routes,);
-// 	}
+void match_route(http_message* message, int socket, AppContext* ctx)
+{
+    router* r = ctx->router;
+    entryRoute* targetRoute = NULL;
 
+    // Dynamic route matching
+    for (int i = 0; i < r->dynamic_routes->count; i++) {
 
+        entryRoute* tempRoute = r->dynamic_routes->array[i];
 
-
-// 	if(strncmp(message->request->request_uri, "/api", 4)==0){
-// 		 printf("🚀 API route detected\n");
-// 		if (strcmp(message->request->request_uri, "/api/posts") == 0) {
-// 			printf("✅ Matched /api/posts route\n");
-//         		postController_get_AllpostsPreview(socket, message, ctx);
-// 			}
-// 			else if (strncmp(message->request->request_uri, "/api/posts/", 11) == 0 && strlen(message->request->request_uri) > 11) {
-// 				  printf("✅ Matched /api/posts/:id route\n");
-// 				postController_get_postbyId(socket, message, ctx);
-// 			}else{
-// 				printf("❌ No API route matched for: %s\n", message->request->request_uri);
-// 				send_json_response(socket,"{\"error\":\"route not found\"}",404);
-// 				log_info(ctx->logger,"404 PAGE was sent to socket %d ",socket);
-// 			}
-			
-// 	}else{
-// 		 printf("Static file route detected\n");
-// 			if (strcmp(message->request->request_uri, "/") == 0 || strcmp(message->request->request_uri, "/home") == 0) {
-// 				printf("Serving home page\n");
-// 				serve_static_file(socket, "home.html", ctx);
-// 			}
-// 			else if (strncmp(message->request->request_uri, "/posts/",7)==0) {
-// 				printf("Serving post details page for: %s\n", message->request->request_uri);
-// 				serve_static_file(socket, "posts.html", ctx);
-// 			}
-// 			else {
-// 				printf("Serving static file: %s\n", message->request->request_uri);
-// 				render_static_file(socket, message->request->request_uri, ctx);
-// 			}
-		
-// 	}	
-// }
-void match_route(http_message* message,int socket,AppContext* ctx){
-    router* r = ctx->api_router; 
-    entryRoute* targetRoute  =NULL;
-    int i = 0;
-    for(i=0;i<r->routes->count;i++){
-        entryRoute* tempRoute = r->routes->array[i];
-        if(regexec(tempRoute->reg,message->request->request_uri,0,NULL,0)==0){
+        if (regexec(
+                tempRoute->reg,
+                message->request->request_uri,
+                0,
+                NULL,
+                0
+            ) == 0)
+        {
             puts("ROUTE REGEX MATCHED");
-            if(strcmp(message->request->method,tempRoute->method)==0){
-                puts("====routes METHOD matched=========");
+
+            if (strcmp(message->request->method, tempRoute->method) == 0) {
+                puts("==== routes METHOD matched ====");
                 targetRoute = tempRoute;
                 break;
             }
         }
     }
-    if(targetRoute != NULL){
-        targetRoute->handler(socket,message,ctx);
-    }else{
-            printf("❌ No API route matched for: %s\n", message->request->request_uri);
-			send_json_response(socket,"{\"error\":\"route not found\"}",404);
-			log_info(ctx->logger,"404 PAGE was sent to socket %d ",socket);
+
+    // Dynamic route found
+    if (targetRoute != NULL) {
+        targetRoute->handler(socket, message, ctx);
+        return;
     }
-    
+
+    // Static route matching
+    targetRoute = hashmap_get(
+        ctx->router->static_routes,
+        message->request->request_uri
+    );
+
+    if (targetRoute != NULL) {
+        targetRoute->handler(socket, message, ctx);
+        return;
+    }
+
+    // No route matched
+    if (!is_api(message->request->request_uri)) {
+        const char* error = "NOT FOUND";
+
+        send_response(
+            404,
+            TEXT,
+            strlen(error),
+            socket,
+            error
+        );
+
+        printf(
+            "❌ No API route matched for: %s\n",
+            message->request->request_uri
+        );
+
+        return;   
+    }
+
+    // Not an API route -> try static file
+    render_static_file(socket, message, ctx);
 }
 
 
@@ -122,11 +120,8 @@ void destroy_route(entryRoute* route){
 }
 
 
-void add_route(router* router,char* method,char* pattern,route_handler_t handler){
+void add_dynamic_route(router* router,char* method,char* pattern,route_handler_t handler){
 	if (!router || !method || !pattern || !handler) return;
-    
-    
-
     //create entryroute
  	entryRoute* entry = malloc(sizeof(entryRoute));
 	if(entry==NULL)return ;
@@ -139,25 +134,41 @@ void add_route(router* router,char* method,char* pattern,route_handler_t handler
     puts("finished regex");
     puts("entry routes created");
     //add entry to the routes
-    dynamic_array_push_elem(router->routes,entry);
+    dynamic_array_push_elem(router->dynamic_routes,entry);
+}
+
+void add_static_route(router* router,char* method,char* uri,route_handler_t handler){
+    if (!router || !method || !uri || !handler) return;
+    //create entryroute
+ 	entryRoute* entry = malloc(sizeof(entryRoute));
+	if(entry==NULL)return ;
+    entry->pattern = strdup(uri);
+    entry->handler = handler;
+    entry->method = strdup(method);
+    entry->reg = NULL;
+    hashmap_insert(router->static_routes,uri,entry);
 }
 
 // add api routes here
-void routes_api_init(router* router){
-    puts("adding routes");
-    add_route(router,"GET","^/api/posts$",&postController_get_AllpostsPreview); // /api/posts
-    puts("route adeed");
-    add_route(router,"GET","^/api/posts/([^/]+)",&get_postbyId_json); // /api/posts/id
-    add_route(router,"GET","^/posts/([^/]+)",&get_postbyId_html);
+void routes_init(router* router){
+    puts("adding dynamic routes");
+    add_dynamic_route(router,"GET","^/api/posts/([^/]+)",&get_postbyId_json); // /api/posts/id
+    add_dynamic_route(router,"GET","^/posts/([^/]+)",&get_postbyId_html);
+    puts("adding static routes");
+    add_static_route(router,"GET","/api/posts",&postController_get_AllpostsPreview); // /api/posts
+    add_static_route(router,"GET","/home",&render_home_page); ///home
+    puts("routes added");
     }
+
+     
 
     void destroy_router(router* router){
          int i = 0;
-        for(i=0;i<router->routes->count;i++){
-            destroy_route(router->routes->array[i]);
+        for(i=0;i<router->dynamic_routes->count;i++){
+            destroy_route(router->dynamic_routes->array[i]);
         }
-        dynamic_array_destroy(router->routes);
-        router->routes = NULL;
+        dynamic_array_destroy(router->dynamic_routes);
+        router->dynamic_routes = NULL;
     }
 
 

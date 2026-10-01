@@ -6,13 +6,13 @@
 
 typedef struct repsonseMsg{
     void* data;
-    char* errMsgtype;
-    void* err_msg;
+    int success;
+    void* msg;
     int code_status;
 }repsonseMsg;
 
-repsonseMsg* create_success_response(void* data,int code_status);
-repsonseMsg* create_error_response(char* msgType, char* messages, int code_status);
+// repsonseMsg* create_success_response(void* data,int code_status);
+repsonseMsg* create_response(int success, char* messages, int code_status,void* data);
 repsonseMsg* create_multiError_response(char* msgType, dynamic_array* messages, int code_status);
 void destroy_responseMsg(repsonseMsg* res);
 

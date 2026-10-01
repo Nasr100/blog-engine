@@ -164,26 +164,26 @@ dynamic_array* select_allTags(tagRepo* tagRepo){
     return tags_array;
 }
 
-dynamic_array* find_post_tags(tagRepo* tagRepo,int post_id){
-       dynamic_array* tags_array = dynamic_array_create();
-    sqlite3_stmt *res;
-    char *sql = "SELECT tags.tag_id, tags.name, tags.is_deleted FROM tags INNER JOIN post_tags ON post_tags.tag_id = tags.tag_id WHERE post_tags.post_id = ?";
+// dynamic_array* find_post_tags(tagRepo* tagRepo,int post_id){
+//        dynamic_array* tags_array = dynamic_array_create();
+//     sqlite3_stmt *res;
+//     char *sql = "SELECT tags.tag_id, tags.name, tags.is_deleted FROM tags INNER JOIN post_tags ON post_tags.tag_id = tags.tag_id WHERE post_tags.post_id = ?";
     
-    int rc = sqlite3_prepare_v2(tagRepo->database->db, sql, -1, &res, 0);
-    if (rc != SQLITE_OK) {
-        printf("Failed to prepare statement: %s\n", sqlite3_errmsg(tagRepo->database->db));
-        dynamic_array_destroy(tags_array);
-        return NULL;
-    }
-    sqlite3_bind_int(res, 1, post_id);
-     while ((rc = sqlite3_step(res)) == SQLITE_ROW) {
-        tag* t = create_tag(sqlite3_column_int(res, 0),(char*)sqlite3_column_text(res, 1),sqlite3_column_int(res, 2));
-        dynamic_array_push_elem(tags_array, t);
-    }
-    if (rc != SQLITE_DONE) {
-        printf("Query failed: %s\n", sqlite3_errmsg(tagRepo->database->db));
-    }
+//     int rc = sqlite3_prepare_v2(tagRepo->database->db, sql, -1, &res, 0);
+//     if (rc != SQLITE_OK) {
+//         printf("Failed to prepare statement: %s\n", sqlite3_errmsg(tagRepo->database->db));
+//         dynamic_array_destroy(tags_array);
+//         return NULL;
+//     }
+//     sqlite3_bind_int(res, 1, post_id);
+//      while ((rc = sqlite3_step(res)) == SQLITE_ROW) {
+//         tag* t = create_tag(sqlite3_column_int(res, 0),(char*)sqlite3_column_text(res, 1),sqlite3_column_int(res, 2));
+//         dynamic_array_push_elem(tags_array, t);
+//     }
+//     if (rc != SQLITE_DONE) {
+//         printf("Query failed: %s\n", sqlite3_errmsg(tagRepo->database->db));
+//     }
     
-    sqlite3_finalize(res);
-    return tags_array;
-}
+//     sqlite3_finalize(res);
+//     return tags_array;
+// }

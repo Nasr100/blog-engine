@@ -23,5 +23,5 @@ tag* update_tag(tagRepo* tagRepo,tag* new_tag);
 
 int delete_tagById(tagRepo* tagRepo,int tag_id);
 
-dynamic_array* find_post_tags(tagRepo* tagRepo,int post_id);
+// dynamic_array* find_post_tags(tagRepo* tagRepo,int post_id);
 #endif
